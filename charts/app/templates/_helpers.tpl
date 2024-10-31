@@ -45,10 +45,6 @@ app.kubernetes.io/name: {{ include "fullname" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "validation" -}}
-{{- if and (not .Values.crunchy.enabled)  (not  .Values.bitnamipg.enabled ) }}
-{{- fail "Both Database options are disabled" }}
-{{- end }}
 {{- if and (.Values.crunchy.enabled)  (.Values.bitnamipg.enabled) }}
 {{- fail "Both Database options are enabled" }}
 {{- end }}
