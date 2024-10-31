@@ -1,0 +1,14 @@
+{{- if and .Values.cms.pdb  .Values.cms.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "cms.fullname" . }}
+  labels:
+    {{- include "cms.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "cms.selectorLabels" . | nindent 6 }}
+  minAvailable: {{ .Values.cms.pdb.minAvailable }}
+{{- end }}

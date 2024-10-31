@@ -1,31 +1,65 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "strictNullChecks": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "types": ["vitest/globals","cypress", "node", "cypress-file-upload","@testing-library/cypress"],
-    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "strict": false,
+    "baseUrl": "./src",
     "paths": {
-      "@": ["src"],
-      "test": ["test"],
-      "test/*": ["test/*"],
-      "@/*": ["src/*"],
-      "~/*": ["node_modules/*"]
-    }
+      "@app/*": [
+        "app/*"
+      ],
+      "@models/*": [
+        "app/models/*"
+      ],
+      "@map/*": [
+        "app/map/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@pipes/*": [
+        "app/pipes/*"
+      ],
+      "@projects/*": [
+        "app/projects/*"
+      ],
+      "@services/*": [
+        "app/services/*"
+      ],
+      "@shared/*": [
+        "app/shared/*"
+      ]
+    },
+    "types": [
+      "jest"
+    ],
+    "noImplicitOverride": true,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": [
+      "ES2022",
+      "dom",
+      "esnext.asynciterable"
+    ],
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src","src/**/*", "src/**/*.tsx"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
 }

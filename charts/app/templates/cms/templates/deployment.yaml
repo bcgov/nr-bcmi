@@ -1,0 +1,99 @@
+{{- if .Values.cms.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cms.fullname" . }}
+  labels:
+    {{- include "cms.labels" . | nindent 4 }}
+spec:
+  strategy:
+    type: {{ .Values.cms.deploymentStrategy }}
+  {{- if not .Values.cms.autoscaling.enabled }}
+  replicas: {{ .Values.cms.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "cms.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '3000'
+        prometheus.io/path: '/api/metrics'
+      labels:
+        {{- include "cms.labels" . | nindent 8 }}
+    spec:
+      {{- if .Values.cms.podSecurityContext }}
+      securityContext:
+        {{- toYaml .Values.cms.podSecurityContext | nindent 12 }}
+      {{- end }}
+      containers:
+        - name: {{ include "cms.fullname" . }}
+          {{- if .Values.cms.securityContext }}
+          securityContext:
+            {{- toYaml .Values.cms.securityContext | nindent 12 }}
+          {{- end }}
+          image: "{{.Values.global.registry}}/{{.Values.global.repository}}/cms:{{ .Values.global.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ default "Always" .Values.cms.imagePullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{.Release.Name}}-cms
+          env:
+            - name: LOG_LEVEL
+              value: info
+          ports:
+            - name: http
+              containerPort: {{ .Values.cms.service.targetPort }}
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 30
+          livenessProbe:
+            successThreshold: 1
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 5
+          resources: # this is optional
+            limits:
+              cpu: 150m
+              memory: 150Mi
+            requests:
+              cpu: 50m
+              memory: 75Mi
+      {{- with .Values.cms.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cms.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - {{ include "cms.fullname" . }}
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - {{ .Release.Name }}
+              topologyKey: "kubernetes.io/hostname"
+
+{{- end }}

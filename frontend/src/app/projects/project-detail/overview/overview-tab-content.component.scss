@@ -1,0 +1,11 @@
+.overview {
+    white-space: pre-wrap;
+    
+    ::ng-deep {
+        p {
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
