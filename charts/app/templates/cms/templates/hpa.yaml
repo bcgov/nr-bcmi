@@ -1,18 +1,18 @@
 {{- if .Values.global.autoscaling }}
-{{- if and .Values.backend.autoscaling .Values.backend.autoscaling.enabled }}
+{{- if and .Values.cms.autoscaling .Values.cms.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "backend.fullname" . }}
+  name: {{ include "cms.fullname" . }}
   labels:
-    {{- include "backend.labels" . | nindent 4 }}
+    {{- include "cms.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "backend.fullname" . }}
-  minReplicas: {{ .Values.backend.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.backend.autoscaling.maxReplicas }}
+    name: {{ include "cms.fullname" . }}
+  minReplicas: {{ .Values.cms.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.cms.autoscaling.maxReplicas }}
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 300
@@ -35,21 +35,21 @@ spec:
           periodSeconds: 30
       selectPolicy: Max
   metrics:
-    {{- if .Values.backend.autoscaling.targetCPUUtilizationPercentage }}
+    {{- if .Values.cms.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.backend.autoscaling.targetCPUUtilizationPercentage }}
+          averageUtilization: {{ .Values.cms.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
-    {{- if .Values.backend.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- if .Values.cms.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{ .Values.backend.autoscaling.targetMemoryUtilizationPercentage }}
+          averageUtilization: {{ .Values.cms.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
 {{- end }}
 {{- end }}
