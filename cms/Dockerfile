@@ -6,7 +6,7 @@ ENV NODE_ENV=production
 # Copy, build static files; see .dockerignore for exclusions
 WORKDIR /app
 COPY . ./
-RUN npm run build
+RUN npm install && npm run build
 
 # Deploy using minimal Distroless image
 FROM gcr.io/distroless/nodejs22-debian12:nonroot
