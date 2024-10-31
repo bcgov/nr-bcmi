@@ -24,9 +24,9 @@ global:
   #databaseAlias: bitnamipg #uncomment when using bitnami pg and comment below.
   databaseAlias: postgres-crunchy #uncomment when using crunchy and comment above.
 
-#-- the components of the application, backend.
-backend:
-  #-- enable or disable backend
+#-- the components of the application, cms.
+cms:
+  #-- enable or disable cms
   enabled: true
   #-- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
@@ -74,7 +74,7 @@ backend:
 
 frontend:
   # -- enable or disable a component deployment.
-  enabled: true
+  enabled: false
   # -- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
 
