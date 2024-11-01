@@ -6,6 +6,8 @@ ENV NODE_ENV=production
 # Copy, build static files; see .dockerignore for exclusions
 WORKDIR /app
 COPY . ./
+RUN mkdir -p /.config
+RUN mkdir -p .tmp 
 RUN npm install && npm run build
 
 # Boilerplate, not used in OpenShift/Kubernetes
