@@ -37,9 +37,7 @@ jobs:
     name: Deploys
     needs: [builds]
     uses: ./.github/workflows/.deployer.yml
-    secrets:
-      oc_namespace: ${{ secrets.OC_NAMESPACE }}
-      oc_token: ${{ secrets.OC_TOKEN }}
+    secrets: inherit
     with:
       triggers: ('cms/' 'frontend/' 'charts/')
       db_user: app-${{github.event.number}}

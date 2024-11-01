@@ -16,8 +16,19 @@ global:
     databasePassword: ~
     databaseName: ~
     persist: true
+    adminJWT: ~
+    appKeys: ~
+    apiTokenSalt: ~
+    transferTokenSalt: ~
+    keycloakClientID: ~
+    keycloakClientSecret: ~
   config:
     databaseUser: ~
+    databaseClient: ~
+    databasePort: ~
+    databaseSSL: ~
+    keycloakRealm: ~
+    keycloakURL: ~
   #-- domain of the application, it is required, apps.silver.devops.gov.bc.ca for silver cluster and apps.devops.gov.bc.ca for gold cluster
   domain: "apps.silver.devops.gov.bc.ca" # it is apps.gold.devops.gov.bc.ca for gold cluster
   #-- the database Alias gives a nice way to switch to different databases, crunchy, patroni ... etc.
@@ -33,7 +44,7 @@ cms:
   #-- autoscaling for the component. it is optional and is an object.
   autoscaling:
     #-- enable or disable autoscaling.
-    enabled: true
+    enabled: false
     #-- the minimum number of replicas.
     minReplicas: 3
     #-- the maximum number of replicas.
@@ -81,7 +92,7 @@ frontend:
   #-- autoscaling for the component. it is optional and is an object.
   autoscaling:
     #-- enable or disable autoscaling.
-    enabled: true
+    enabled: false
     #-- the minimum number of replicas.
     minReplicas: 3
     #-- the maximum number of replicas.
