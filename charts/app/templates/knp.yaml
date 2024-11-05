@@ -17,28 +17,7 @@ spec:
   policyTypes:
     - Ingress
 ---
-{{- if .Values.crunchy.enabled }} #KNP for crunchy db
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: {{ .Release.Name }}-allow-cms-to-db
-  labels: {{- include "selectorLabels" . | nindent 4 }}
-spec:
-  podSelector:
-    matchLabels:
-      postgres-operator.crunchydata.com/cluster: {{ .Values.global.databaseAlias}}
-  ingress:
-    - ports:
-        - protocol: TCP
-          port: 5432
-      from:
-        - podSelector:
-            matchLabels:
-              app.kubernetes.io/name: {{ template  "cms.name"}}
-              app.kubernetes.io/instance: {{ .Release.Name }}
-  policyTypes:
-    - Ingress
-{{- else }} #KNP for crunchy bitnami pg
+
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -60,8 +39,6 @@ spec:
               app.kubernetes.io/instance: {{ .Release.Name }}
   policyTypes:
     - Ingress
-{{- end }}
-
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -77,7 +54,7 @@ spec:
   ingress:
     - ports:
         - protocol: TCP
-          port: 3000
+          port: 1337
       from:
         - podSelector:
             matchLabels:
