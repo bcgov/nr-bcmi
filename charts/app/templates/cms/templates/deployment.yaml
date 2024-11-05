@@ -19,7 +19,7 @@ spec:
       annotations:
         rollme: {{ randAlphaNum 5 | quote }}
         prometheus.io/scrape: 'true'
-        prometheus.io/port: '3000'
+        prometheus.io/port: '1337'
         prometheus.io/path: '/api/metrics'
       labels:
         {{- include "cms.labels" . | nindent 8 }}
@@ -48,7 +48,7 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /api/health
+              path: /_health
               port: http
               scheme: HTTP
             initialDelaySeconds: 5
@@ -60,8 +60,8 @@ spec:
             successThreshold: 1
             failureThreshold: 3
             httpGet:
-              path: /api/health
-              port: 3000
+              path: /_health
+              port: 1337
               scheme: HTTP
             initialDelaySeconds: 15
             periodSeconds: 30

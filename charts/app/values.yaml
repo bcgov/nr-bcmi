@@ -136,6 +136,8 @@ bitnamipg:
     tag: 15.8.0
   auth:
     existingSecret: '{{ .Release.Name }}-database'
+    username: ~
+    password: ~
   shmVolume:
     enabled: false
   backup:

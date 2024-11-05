@@ -25,11 +25,6 @@ jobs:
           tag_fallback: latest
           triggers: ('${{ matrix.package }}/')
 
-  deploy_db:
-    name: Deploys Database
-    uses: ./.github/workflows/.dbdeployer.yml
-    secrets: inherit
-
   # https://github.com/bcgov/quickstart-openshift-helpers
   deploys:
     name: Deploys
