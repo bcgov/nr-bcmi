@@ -167,7 +167,7 @@ jobs:
             --set-string global.secrets.keycloakClientID="${{secrets.KEYCLOAK_CLIENT_ID}}" \
             --set-string global.secrets.keycloakClientSecret="${{secrets.KEYCLOAK_CLIENT_SECRET}}" \
             --set-string bitnamipg.auth.username="${{secrets.DATABASE_USERNAME}}" \
-            --set-string bitnamipg.auth.password="${{secrets.DATABASE_PASSWORD}}" \
+            --set-string bitnamipg.auth.database="${{vars.DATABASE_NAME}}" \
             --set-string global.config.databaseHost="${{steps.vars.outputs.release}}-bitnamipg" \
             ${{ inputs.params }} \
             --install --wait --atomic ${{ steps.vars.outputs.release }} \

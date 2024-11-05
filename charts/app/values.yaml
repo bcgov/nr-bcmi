@@ -138,7 +138,7 @@ bitnamipg:
   auth:
     existingSecret: '{{ .Release.Name }}-database'
     username: ~
-    password: ~
+    database: ~
   shmVolume:
     enabled: false
   backup:
