@@ -38,7 +38,7 @@ global:
 #-- the components of the application, cms.
 cms:
   #-- enable or disable cms
-  enabled: true
+  enabled: false
   #-- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
   #-- autoscaling for the component. it is optional and is an object.
