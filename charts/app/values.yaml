@@ -17,6 +17,7 @@ global:
     databaseName: ~
     persist: true
     adminJWT: ~
+    jwtSecret: ~
     appKeys: ~
     apiTokenSalt: ~
     transferTokenSalt: ~
