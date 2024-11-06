@@ -42,6 +42,8 @@ spec:
           env:
             - name: LOG_LEVEL
               value: info
+            - name: HOSTNAME
+              value: {{ include "cms.fullname" . }}.{{ .Values.global.domain }}
           ports:
             - name: http
               containerPort: {{ .Values.cms.service.targetPort }}
