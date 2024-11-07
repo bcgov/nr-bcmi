@@ -18,14 +18,20 @@
 	encode zstd gzip
 	file_server
 	@spa_router {
-		not path /graphql*
+		not path /graphql* /api*
 		file {
 			try_files {path} /index.html
 		}
 	}
 	rewrite @spa_router {http.matchers.file.relative}
-	# Proxy requests to API service
+	# Proxy requests to CMS service
 	reverse_proxy /graphql* {$CMS_URL} {
+		header_up Host {http.reverse_proxy.upstream.hostport}
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+	}
+	# Proxy requests to API service
+	reverse_proxy /api* {$API_URL} {
 		header_up Host {http.reverse_proxy.upstream.hostport}
 		header_up X-Real-IP {remote_host}
 		header_up X-Forwarded-For {remote_host}

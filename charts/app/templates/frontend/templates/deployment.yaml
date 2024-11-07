@@ -40,6 +40,8 @@ spec:
               value: "http://{{ .Release.Name }}-cms"
             - name: LOG_LEVEL
               value: "info"
+            - name: API_URL
+              value: "http://nrpti-api"
           ports:
             - name: http
               containerPort: 3000
