@@ -30,7 +30,7 @@ app.kubernetes.io/image-version: {{ .Values.global.tag | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/short-name: {{ include "frontend.name" . }}
-role=frontend
+role: frontend
 {{- end }}
 
 {{/*
