@@ -370,3 +370,4 @@ cms/package-lock.json
 /frontend/.angular
 /cms/dist
 /cms/.strapi
+.DS_Store

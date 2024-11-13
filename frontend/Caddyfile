@@ -42,7 +42,7 @@
 		Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate"
 		X-Content-Type-Options "nosniff"
 		Strict-Transport-Security "max-age=31536000"
-		Content-Security-Policy "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.typekit.net https://use.fontawesome.com; font-src 'self' https://use.typekit.net https://fonts.gstatic.com; img-src 'self' https://server.arcgisonline.com data: https://fonts.googleapis.com http://www.w3.org https://*.gov.bc.ca"
+		Content-Security-Policy "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.typekit.net https://use.fontawesome.com; font-src 'self' https://use.typekit.net https://fonts.gstatic.com; img-src 'self' https://server.arcgisonline.com https://p.typekit.net data: https://fonts.googleapis.com http://www.w3.org https://*.gov.bc.ca"
 		Referrer-Policy "same-origin"
 		Feature-Policy "fullscreen 'self'; camera 'none'; microphone 'none'"
 	}
