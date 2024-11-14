@@ -19,24 +19,10 @@ jobs:
     if: ${{ ! github.event.pull_request.draft }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
     strategy:
       matrix:
-        dir: [cms, frontend]
+        dir: [frontend]
         include:
-          - dir: cms
-            token: SONAR_TOKEN_CMS
           - dir: frontend
             token: SONAR_TOKEN_FRONTEND
     steps:
@@ -44,7 +30,7 @@ jobs:
         with:
           commands: |
             npm ci
-            npm run test:cov
+            npm run test-ci
           dir: ${{ matrix.dir }}
           node_version: "20"
           sonar_args: >
