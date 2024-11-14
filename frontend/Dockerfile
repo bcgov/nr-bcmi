@@ -4,14 +4,14 @@ FROM node:20-slim AS build
 # Copy, build static files; see .dockerignore for exclusions
 WORKDIR /app
 COPY . ./
-RUN npm run deploy
+RUN npm install && npm run build
 
 # Deploy using Caddy to host static files
 FROM caddy:2.8.4-alpine
 RUN apk add --no-cache ca-certificates
 
 # Copy static files, verify Caddyfile formatting
-COPY --from=build /app/dist /srv
+COPY --from=build /app/dist/browser /srv
 COPY Caddyfile /etc/caddy/Caddyfile
 RUN caddy fmt /etc/caddy/Caddyfile
 

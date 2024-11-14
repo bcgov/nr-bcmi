@@ -1,0 +1,27 @@
+{{- if .Values.cms.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "cms.fullname" . }}
+  labels:
+    {{- include "cms.labels" . | nindent 4 }}
+  {{- if and .Values.cms.ingress .Values.cms.ingress.annotations }}
+  {{- with .Values.cms.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
+spec:
+  ingressClassName: openshift-default
+  rules:
+    - host: {{ include "cms.fullname" . }}.{{ .Values.global.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ include "cms.fullname" . }}
+                port:
+                  number: 80
+{{- end }}

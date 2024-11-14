@@ -19,7 +19,7 @@ spec:
         paths:
           - path: /
             pathType: ImplementationSpecific
-            cms:
+            backend:
               service:
                 name: {{ include "frontend.fullname" . }}
                 port:

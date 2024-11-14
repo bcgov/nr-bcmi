@@ -5,38 +5,61 @@ x-var:
   - &POSTGRES_PASSWORD
     default
   - &POSTGRES_DATABASE
-    postgres
-
-# Reusable envars for postgres
-x-postgres-vars: &postgres-vars
-  POSTGRES_HOST: database
-  POSTGRES_USER: *POSTGRES_USER
-  POSTGRES_PASSWORD: *POSTGRES_PASSWORD
-  POSTGRES_DATABASE: *POSTGRES_DATABASE
+    cms
 
 services:
 
+  database:
+    image: postgres:16.4
+    container_name: database
+    environment:
+      POSTGRES_HOST: database
+      POSTGRES_USER: *POSTGRES_USER
+      POSTGRES_PASSWORD: *POSTGRES_PASSWORD
+      POSTGRES_DB: *POSTGRES_DATABASE
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", *POSTGRES_USER]
+    ports: ["5432:5432"]
+
   cms:
     container_name: cms
-    entrypoint: sh -c "npm i && npm run start:dev"
+    entrypoint: sh -c "npm i && npm run start"
     environment:
-      <<: *postgres-vars
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_NAME: *POSTGRES_DATABASE
+      DATABASE_USERNAME: *POSTGRES_USER
+      DATABASE_PASSWORD: *POSTGRES_PASSWORD
+      DATABASE_SSL: false
+      APP_KEYS: a,b,c,d
+      API_TOKEN_SALT: default
+      ADMIN_JWT_SECRET: default
+      TRANSFER_TOKEN_SALT: default
+      JWT_SECRET: default
+      KEYCLOAK_REALM: standard
+      KEYCLOAK_URL: https://dev.loginproxy.gov.bc.ca/auth
+      KEYCLOAK_CLIENT_ID: bcmi-cms-5784
+      KEYCLOAK_CLIENT_SECRET: default
       NODE_ENV: development
-    image: node:20
+    image: node:20.18
     ports: ["1337:1337"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:1337/graphql"]
+      test: ["CMD", "curl", "-f", "http://localhost:1337/admin"]
     working_dir: "/app"
     volumes: ["./cms:/app", "/app/node_modules"]
+    depends_on:
+      database:
+        condition: service_healthy
 
   frontend:
     container_name: frontend
-    entrypoint: sh -c "npm ci && npm run dev"
+    entrypoint: sh -c "npm ci && npm run start -- --host 0.0.0.0"
     environment:
       CMS_URL: http://cms:1337
       PORT: 3000
       NODE_ENV: development
-    image: node:20
+    image: node:20.18
     ports: ["3000:3000"]
     volumes: ["./frontend:/app", "/app/node_modules"]
     healthcheck:

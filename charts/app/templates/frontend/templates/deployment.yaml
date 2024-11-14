@@ -40,6 +40,8 @@ spec:
               value: "http://{{ .Release.Name }}-cms"
             - name: LOG_LEVEL
               value: "info"
+            - name: API_URL
+              value: "http://nrpti-api:3000"
           ports:
             - name: http
               containerPort: 3000
@@ -67,11 +69,11 @@ spec:
             timeoutSeconds: 5
           resources:
             limits:
-              cpu: 100m
-              memory: 150Mi
+              cpu: 150m
+              memory: 300Mi
             requests:
-              cpu: 30m
-              memory: 50Mi
+              cpu: 100m
+              memory: 100Mi
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

@@ -361,3 +361,13 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/node,java,python,go
+
+cms/.env
+cms/.strapi-updater.json
+cms/package-lock.json
+/cms/.tmp
+/frontend/dist
+/frontend/.angular
+/cms/dist
+/cms/.strapi
+.DS_Store

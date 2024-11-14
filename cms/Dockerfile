@@ -1,36 +1,20 @@
 # Build
 FROM node:20.18-slim AS build
 
-# Copy, build static files; see .dockerignore for exclusions
-WORKDIR /app
-COPY . ./
-RUN npm run deploy
-
-# Dependencies
-FROM node:20.18-slim AS dependencies
-
-# Copy, build static files; see .dockerignore for exclusions
-WORKDIR /app
-COPY . ./
-ENV PRISMA_CLI_BINARY_TARGETS=debian-openssl-3.0.x
-RUN npm ci --ignore-scripts --no-update-notifier --omit=dev
-
-# Deploy using minimal Distroless image
-FROM gcr.io/distroless/nodejs22-debian12:nonroot
 ENV NODE_ENV=production
 
-# Copy app and dependencies
+# Copy, build static files; see .dockerignore for exclusions
 WORKDIR /app
-COPY --from=dependencies /app/node_modules ./node_modules
-COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=build /app/node_modules/prisma ./node_modules/prisma
-COPY --from=build /app/dist ./dist
+COPY . ./
+RUN mkdir -p /.config
+RUN mkdir -p .tmp 
+RUN npm install && npm run build
 
 # Boilerplate, not used in OpenShift/Kubernetes
-EXPOSE 1337
-HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:1337/graphql
+EXPOSE 1337 
+HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:1337/admin
+
+CMD ["npm","run","start"]
 
 # Nonroot user, limit heap size to 50 MB
-USER nonroot
-CMD ["--max-old-space-size=50", "/app/dist/main"]
+USER 1001

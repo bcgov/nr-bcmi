@@ -61,14 +61,6 @@ on:
         description: 'Has a deployment has been triggered?'
         value: ${{ jobs.deployer.outputs.triggered }}
 
-    secrets:
-      oc_namespace:
-        description: OpenShift namespace
-        required: true
-      oc_token:
-        description: OpenShift token
-        required: true
-
 jobs:
   deployer:
     name: Helm
@@ -160,7 +152,24 @@ jobs:
           helm upgrade \
             --set-string global.repository=${{ github.repository }} \
             --set-string global.tag=${{ steps.vars.outputs.tag }} \
-            --set-string global.config.databaseUser=${{ inputs.db_user }} \
+            --set-string global.config.databaseUser="${{ secrets.DATABASE_USERNAME }}" \
+            --set-string global.config.databaseClient="${{ vars.DATABASE_CLIENT }}" \
+            --set-string global.config.databasePort="${{ vars.DATABASE_PORT }}" \
+            --set-string global.config.databaseSSL="${{ vars.DATABASE_SSL }}" \
+            --set-string global.config.keycloakRealm="${{ vars.KEYCLOAK_REALM }}" \
+            --set-string global.config.keycloakURL="${{ vars.KEYCLOAK_URL }}" \
+            --set-string global.secrets.apiTokenSalt="${{secrets.API_TOKEN_SALT}}" \
+            --set-string global.secrets.databaseName="${{vars.DATABASE_NAME}}" \
+            --set-string global.secrets.databasePassword="${{secrets.DATABASE_PASSWORD}}" \
+            --set-string global.secrets.adminJWT="${{secrets.ADMIN_JWT_SECRET}}" \
+            --set-string global.secrets.jwtSecret="${{secrets.JWT_SECRET}}" \
+            --set-string global.secrets.transferTokenSalt="${{secrets.TRANSFER_TOKEN_SALT}}" \
+            --set-string global.secrets.appKeys="${{secrets.APP_KEYS}}" \
+            --set-string global.secrets.keycloakClientID="${{secrets.KEYCLOAK_CLIENT_ID}}" \
+            --set-string global.secrets.keycloakClientSecret="${{secrets.KEYCLOAK_CLIENT_SECRET}}" \
+            --set-string bitnamipg.auth.username="${{secrets.DATABASE_USERNAME}}" \
+            --set-string bitnamipg.auth.database="${{vars.DATABASE_NAME}}" \
+            --set-string global.config.databaseHost="${{steps.vars.outputs.release}}-bitnamipg" \
             ${{ inputs.params }} \
             --install --wait --atomic ${{ steps.vars.outputs.release }} \
             --timeout ${{ inputs.timeout-minutes }}m \

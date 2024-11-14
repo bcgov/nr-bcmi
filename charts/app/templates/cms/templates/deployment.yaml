@@ -18,8 +18,8 @@ spec:
     metadata:
       annotations:
         rollme: {{ randAlphaNum 5 | quote }}
-        prometheus.io/scrape: 'true'
-        prometheus.io/port: '3000'
+        prometheus.io/scrape: 'false'
+        prometheus.io/port: '1337'
         prometheus.io/path: '/api/metrics'
       labels:
         {{- include "cms.labels" . | nindent 8 }}
@@ -42,17 +42,19 @@ spec:
           env:
             - name: LOG_LEVEL
               value: info
+            - name: HOSTNAME
+              value: 'https://{{ include "cms.fullname" . }}.{{ .Values.global.domain }}'
           ports:
             - name: http
               containerPort: {{ .Values.cms.service.targetPort }}
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /api/health
-              port: http
+              path: /_health
+              port: 1337
               scheme: HTTP
             initialDelaySeconds: 5
-            periodSeconds: 2
+            periodSeconds: 30
             timeoutSeconds: 2
             successThreshold: 1
             failureThreshold: 30
@@ -60,19 +62,19 @@ spec:
             successThreshold: 1
             failureThreshold: 3
             httpGet:
-              path: /api/health
-              port: 3000
+              path: /_health
+              port: 1337
               scheme: HTTP
             initialDelaySeconds: 15
             periodSeconds: 30
             timeoutSeconds: 5
           resources: # this is optional
             limits:
-              cpu: 150m
-              memory: 150Mi
+              cpu: 300m
+              memory: 300Mi
             requests:
-              cpu: 50m
-              memory: 75Mi
+              cpu: 100m
+              memory: 150Mi
       {{- with .Values.cms.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
