@@ -33,7 +33,6 @@ jobs:
     secrets: inherit
     with:
       triggers: ('cms/' 'frontend/' 'charts/')
-      db_user: app-${{github.event.number}}
       params: --set global.secrets.persist=false
 
   # tests:
