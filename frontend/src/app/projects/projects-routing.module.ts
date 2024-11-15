@@ -18,7 +18,9 @@ const routes: Routes = [
       project: ProjectDetailResolver
     },
     children: TAB_NAV_ROUTES  // each tab within the page navigates to a separate route; e.g. /p/:code/(overview|compliance|docs)
-  }
+  },
+  {path: 'projects',   redirectTo: '/mines', pathMatch: 'full'},
+  {path: 'p/:code',   redirectTo: '/mines'}
 ];
 
 @NgModule({
