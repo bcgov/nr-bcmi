@@ -1,3 +1,5 @@
+import MenuLogo from "../extensions/BC_Logo.png";
+
 export default {
   config: {
     locales: [
@@ -41,6 +43,9 @@ export default {
         "app.components.HomePage.welcomeBlock.content": "To edit content select 'Content Manager' from the left menu.",
         "app.components.HomePage.welcomeBlock.content.again": "To edit content select 'Content Manager' from the left menu.",
       }
+    },
+    menu: { // Replace the Strapi logo in the main navigation
+      logo: MenuLogo,
     },
   },
   
