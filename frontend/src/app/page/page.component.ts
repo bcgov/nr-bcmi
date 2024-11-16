@@ -1,6 +1,7 @@
 import { afterRender, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Page } from '../../models/content/page';
+import { Page } from '../models/content/page';
+import { SafeHtmlPipe } from '@app/pipes/safe-html.pipe';
 
 @Component({
   selector: 'app-page',
