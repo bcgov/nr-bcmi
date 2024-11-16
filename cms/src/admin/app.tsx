@@ -29,12 +29,21 @@ export default {
       // 'zh-Hans',
       // 'zh',
     ],
+    notificiations: {
+      releases: false
+    },
+    translations: {
+      en: {
+        "app.components.LeftMenu.navbrand.title": "BCMI Dashboard",
+        "app.components.LeftMenu.navbrand.workplace": "Mines Digital Services",
+        "app.components.HomePage.welcome": "Welcome to the BCMI Content Management System!",
+        "app.components.HomePage.welcome.again": "Welcome back to the BCMI Content Management System 👋",
+        "app.components.HomePage.welcomeBlock.content": "To edit content select 'Content Manager' from the left menu.",
+        "app.components.HomePage.welcomeBlock.content.again": "To edit content select 'Content Manager' from the left menu.",
+      }
+    },
   },
-  translations: {
-    en: {
-      "app.components.LeftMenu.navbrand.title": "BCMI Dashboard",
-    }
-  },
+  
   bootstrap(app) {
     console.log(app);
   },
