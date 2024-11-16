@@ -12,15 +12,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent} from './footer/footer.component';
-import { LegislationComponent } from './static-pages/legislation/legislation.component';
-import { ComplianceOversightComponent } from './static-pages/compliance-oversight/compliance-oversight.component';
-import { ContactComponent } from './static-pages/contact/contact.component';
-import { AuthorizationsComponent } from './static-pages/authorizations/authorizations.component';
-import { LifecycleComponent } from './static-pages/lifecycle/lifecycle.component';
-import { TopicsOfInterestComponent } from './static-pages/topics-of-interest/topics-of-interest.component';
-import { WaterQualityComponent } from './static-pages/water-quality/water-quality.component';
-import { TailingsManagementComponent } from './static-pages/tailings-management/tailings-management.component';
-import { ReclamationComponent } from './static-pages/reclamation/reclamation.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EnforcementActionsModule } from './enforcement-actions/enforcement-actions.module';
 import { ProponentService } from '@services/proponent.service';
@@ -38,7 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import { GraphQLModule } from './graphql.module';
-import { PageComponent } from './static-pages/page/page.component';
+import { PageComponent } from './page/page.component';
 import { ContentService } from './services/content-service';
 import { ContentDirective } from './services/content-directive';
 
@@ -52,16 +43,7 @@ export function initConfig(configService: ConfigService) {
     FooterComponent,
     AppComponent,
     HomeComponent,
-    LegislationComponent,
-    ComplianceOversightComponent,
-    ContactComponent,
-    AuthorizationsComponent,
     PageComponent,
-    LifecycleComponent,
-    TopicsOfInterestComponent,
-    WaterQualityComponent,
-    TailingsManagementComponent,
-    ReclamationComponent,
     NotFoundComponent,
     ContentDirective
   ],
