@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Route, Router } from '@angular/router';
-import { PageComponent } from '@app/static-pages/page/page.component';
+import { PageComponent } from '@app/page/page.component';
 import { ContentResolver } from './content-resolver';
 import { ContentService } from './content-service';
 

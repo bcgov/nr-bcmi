@@ -33,34 +33,29 @@ Git commit signing is required for commits. [How to setup git commit signing](ht
 
 **Software Requirements**
 
-- Node 20 or higher must be installed.
+- Node 20 must be used.
 - @angular/cli should be installed.
+- Docker should be installed.
 
 ### Installation
 
-- [Clone the mem-mmti-public repository](https://help.github.com/en/articles/cloning-a-repository)
+- [Clone the nr-bcmi repository](https://help.github.com/en/articles/cloning-a-repository)
 
-**To connect to the openshift dev database:**
-  1. Login to openshift and copy the login token (Click your name in the top right)
-  2. In a terminal paste and run the login command.
-  3. Ensure no other postgres instance is running or choose another port (brew services stop postgresql)
-  4. Run the command: (Note: If the pod restarts, the pod name may change.) ```oc port-forward cms-postgres-1-2cn2c 5432:5432 -n f00029-dev```
+**To run/develop using docker:**
+1. Run ```docker compose up ```
 
-
-**To connect to the frontend:**
+**To run the frontend locally:**
   1. Install angular/cli ```npm i -g @angular/cli```
   1. ``` cd bcmi ```
   1. ``` npm install ```
   1. ``` npm run start ```
 
 
-  **To connect to Strappi and graphql:**
+  **To run Strapi locally:**
   1. create an .env file in the cms folder using the .env.template, find secrets in openshift
-  1. ``` npm install ```
   1. ``` cd cms ```
   1. ``` npm install ```
   1. ``` npm run develop ```
-  1. go to the pods openshift secrets to find the strappi login details
   1. Login to strapi admin at http://localhost:1337/admin
   1. See graphql queries at http://localhost:1337/graphql (ensure the strappi content has the 'find' role enabled)
 
