@@ -1,4 +1,4 @@
-export class Header_Button {
+export class HeaderButton {
     Text: string;
     Section_id: string;
 }
