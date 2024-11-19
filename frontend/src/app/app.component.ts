@@ -45,8 +45,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     private configService: ConfigService,
     private router: Router) {
     if(configService.globalContent){
-      this.footer = configService.globalContent.footer?.data.attributes;
-      this.navigation = configService.globalContent.navigations?.data;
+      if(configService.globalContent.footer && configService.globalContent.footer.data){
+        this.footer = configService.globalContent.footer?.data.attributes;
+      }
+      if(configService.globalContent.navigations && configService.globalContent.navigations.data){
+        this.navigation = configService.globalContent.navigations?.data;
+      }
     }
     this.router.events.subscribe((event: Event) => {
       switch (true) {
