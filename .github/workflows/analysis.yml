@@ -14,34 +14,41 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  sonarcloud:
+    name: SonarQube Cloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarQube Cloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   tests:
     name: Tests
     if: ${{ ! github.event.pull_request.draft }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
-    strategy:
-      matrix:
-        dir: [frontend]
-        include:
-          - dir: frontend
-            token: SONAR_TOKEN_FRONTEND
     steps:
       - uses: bcgov-nr/action-test-and-analyse@v1.2.1
         with:
           commands: |
             npm ci
             npm run test-ci
-          dir: ${{ matrix.dir }}
+          dir: frontend
           node_version: "20"
           sonar_args: >
             -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts
             -Dsonar.organization=bcgov-sonarcloud
-            -Dsonar.projectKey=quickstart-openshift_${{ matrix.dir }}
+            -Dsonar.projectKey=bcgov_nr-bcmi
             -Dsonar.sources=src
             -Dsonar.tests.inclusions=**/*spec.ts
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-          sonar_token: ${{ secrets[matrix.token] }}
-          triggers: ('${{ matrix.dir }}/')
+          sonar_token: ${{ secrets.SONAR_TOKEN }}
+          triggers: ('frontend/' 'charts/frontend')
 
   # https://github.com/marketplace/actions/aqua-security-trivy
   trivy:
