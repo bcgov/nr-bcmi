@@ -39,6 +39,8 @@ jobs:
         --set global.autoscaling=true
         --set frontend.pdb.enabled=true
         --set cms.pdb.enabled=true
+        --set cms.replicaCount=2
+        --set frontend.replicaCount=2
   promote:
     name: Promote Images
     needs: [deploy-prod, vars]
