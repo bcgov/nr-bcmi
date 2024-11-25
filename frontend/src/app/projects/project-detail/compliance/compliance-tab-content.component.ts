@@ -17,6 +17,7 @@ export class ComplianceTabContentComponent implements OnInit, OnDestroy {
   loading: boolean;
   project: Project;
   collections: CollectionsArray;
+  nrcedLinkEnabled: boolean;
 
   sortField: string;
   sortAsc: boolean;
@@ -25,20 +26,16 @@ export class ComplianceTabContentComponent implements OnInit, OnDestroy {
   // private fields
   private sub: Subscription;
 
-  NRCEDLinkEnabled: boolean;
-
   constructor(private readonly route: ActivatedRoute, private readonly logger: LoggerService, private readonly configService: ConfigService) { }
 
   ngOnInit(): void {
     this.loading = true;
-    
+    this.nrcedLinkEnabled = this.configService.checkFeatureFlag("nrced-link","true");
     this.sub = this.route.parent.data.subscribe({
       next: (data: { project: Project }) => this.parseData(data),
       error: (error) => this.logger.log(error),
       complete: () => this.loading = false
     })
-
-    this.NRCEDLinkEnabled = this.configService.checkFeatureFlag("nrced-link","true");
   }
 
   parseData(data: {project: Project}): void {
