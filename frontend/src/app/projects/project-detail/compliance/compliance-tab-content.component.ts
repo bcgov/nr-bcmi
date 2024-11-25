@@ -27,20 +27,22 @@ export class ComplianceTabContentComponent implements OnInit, OnDestroy {
 
   NRCEDLinkEnabled: boolean;
 
-  constructor(private route: ActivatedRoute, private logger: LoggerService, private configService: ConfigService) { }
+  constructor(private readonly route: ActivatedRoute, private readonly logger: LoggerService, private readonly configService: ConfigService) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.sub = this.route.parent.data.subscribe(
-      (data: { project: Project }) => this.parseData(data),
-      error => this.logger.log(error),
-      () => this.loading = false
-    );
+    
+    this.sub = this.route.parent.data.subscribe({
+      next: (data: { project: Project }) => this.parseData(data),
+      error: (error) => this.logger.log(error),
+      complete: () => this.loading = false
+    })
+
     this.NRCEDLinkEnabled = this.configService.checkFeatureFlag("nrced-link","true");
   }
 
   parseData(data: {project: Project}): void {
-    if (data.project && data.project.collections) {
+    if (data.project?.collections) {
       this.project = data.project;
       this.collections = data.project.collections.compliance;
 

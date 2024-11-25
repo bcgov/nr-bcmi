@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routes';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -57,7 +57,6 @@ export function initConfig(configService: ConfigService) {
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
-    HttpClientModule,
     ProjectsModule, // <-- module import order matters - https://angular.io/guide/router#module-import-order-matters
     EnforcementActionsModule,
     AppRoutingModule,

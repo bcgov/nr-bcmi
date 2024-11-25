@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ObjectFilterPipe } from '@pipes/object-filter.pipe';
 import { OperatorFilterPipe } from '@pipes/operator-filter.pipe';
 import { ProjectStatusFilterPipe } from '@pipes/project-status-filter.pipe';
@@ -11,34 +10,30 @@ import { ConfigService } from '@services/config.service';
 
 import { ComplianceTabContentComponent } from '@projects/project-detail/compliance//compliance-tab-content.component';
 import { OrderByPipe } from '@pipes/filters/order-by.pipe';
-import { HttpClientModule } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { of } from 'rxjs';
 import { ContentService } from '@app/services/content-service';
 import { Apollo } from 'apollo-angular';
 
 describe('ComplianceTabContentComponent', () => {
   let component: ComplianceTabContentComponent;
   let fixture: ComponentFixture<ComplianceTabContentComponent>;
+  let configService: ConfigService;
   let ActivatedRouteStub;
 
   beforeEach(waitForAsync(() => {
     // stub activated route
     ActivatedRouteStub = {
       parent: {
-        data: {
-          subscribe: (next: (value) => void) => {
-            next({project: Project});
-            const sub = new Subscription();
-            sub.unsubscribe = jest.fn();
-            return sub;
-          }
-        }
+        data: of({project: Project})
       }
+    };
+    const configServiceMock = {
+      checkFeatureFlag: jest.fn() // Create a mock function
     };
     TestBed.configureTestingModule({
       providers: [
         { provide: ActivatedRoute, useValue: ActivatedRouteStub },
-        ConfigService,
+        { provide: ConfigService, useValue: configServiceMock },
         ContentService,
         Apollo
       ],
@@ -51,8 +46,7 @@ describe('ComplianceTabContentComponent', () => {
         OrderByPipe
       ],
       imports: [
-        RouterTestingModule,
-        HttpClientModule
+       
       ]
     })
     .compileComponents();
@@ -61,6 +55,7 @@ describe('ComplianceTabContentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ComplianceTabContentComponent);
     component = fixture.componentInstance;
+    configService = TestBed.inject(ConfigService);
     component.project = new Project();
     component.project.moreInspectionsLink = null;
     component.collections = new CollectionsArray();
@@ -73,6 +68,9 @@ describe('ComplianceTabContentComponent', () => {
     it('should return project data', () => {
       expect(component.project).toBeTruthy();
     });
+    it('should check feature flag', () => {
+      expect(configService.checkFeatureFlag).toHaveBeenCalledWith('nrced-link', 'true');
+    })
   });
   describe('parseData(data)', () => {
     beforeEach(() => {
