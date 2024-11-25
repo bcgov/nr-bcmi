@@ -25,6 +25,8 @@ export class ComplianceTabContentComponent implements OnInit, OnDestroy {
   // private fields
   private sub: Subscription;
 
+  NRCEDLinkEnabled: boolean;
+
   constructor(private route: ActivatedRoute, private logger: LoggerService, private configService: ConfigService) { }
 
   ngOnInit(): void {
@@ -34,6 +36,7 @@ export class ComplianceTabContentComponent implements OnInit, OnDestroy {
       error => this.logger.log(error),
       () => this.loading = false
     );
+    this.NRCEDLinkEnabled = this.configService.checkFeatureFlag("nrced-link","true");
   }
 
   parseData(data: {project: Project}): void {
