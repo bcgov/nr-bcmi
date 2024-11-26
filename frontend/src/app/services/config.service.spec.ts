@@ -1,17 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from '@services/config.service';
 import { ContentService } from './content-service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 // Mocking ContentService
 const mockContentService = {
   getRoutes: jest.fn(),
   getGlobalContent: jest.fn()
 }
+const mockConfigResponse = {debugMode: true };
+const mockHttpClient = {
+  get: jest.fn( () => of(mockConfigResponse))
+}
 
 describe('ConfigService', () => {
   let configService: ConfigService;
+  let httpClient: HttpClient;
   let router: Router;
   let contentService: ContentService;
   
@@ -21,8 +27,7 @@ describe('ConfigService', () => {
     TestBed.configureTestingModule({
       providers: [
         ConfigService,
-        HttpClient,
-        HttpHandler,
+        { provide: HttpClient, useValue: mockHttpClient },
         { provide: Router, useValue: { config: [], resetConfig: jest.fn() } },
         { provide: ContentService, useValue: mockContentService }
       ],
@@ -31,6 +36,7 @@ describe('ConfigService', () => {
     });
 
     configService = TestBed.inject(ConfigService);
+    httpClient = TestBed.inject(HttpClient);
     router = TestBed.inject(Router);
     contentService = TestBed.inject(ContentService);
   });
@@ -39,17 +45,21 @@ describe('ConfigService', () => {
     jest.clearAllMocks();
   });
 
+
   describe('init', () => {
     it('should initialize routes and configuration successfully', async () => {
-      // Mock ContentService methods
+      // Mock ContentService & httpClient methods
       const mockRoutes = [{ attributes: { route: 'test-route' } }];
       mockContentService.getRoutes.mockResolvedValue(mockRoutes);
       mockContentService.getGlobalContent.mockResolvedValue({});
 
       await configService.init();
 
+      // Expectation: ConfigService methods and properties have been called or set correctly
       expect(contentService.getRoutes).toHaveBeenCalled();
       expect(contentService.getGlobalContent).toHaveBeenCalled();
+      expect(httpClient.get).toHaveBeenCalledWith('api/config/BCMI');
+      expect(configService.config).toEqual(mockConfigResponse);
       expect(router.resetConfig).toHaveBeenCalled();
     });
   });

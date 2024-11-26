@@ -14,6 +14,7 @@ module.exports = {
       "@pipes(.*)": "<rootDir>/src/app/pipes/$1",
       "@projects(.*)": "<rootDir>/src/app/projects/$1",
       "@services(.*)": "<rootDir>/src/app/services/$1",
-      "@shared(.*)": "<rootDir>/src/app/shared/$1"
+      "@shared(.*)": "<rootDir>/src/app/shared/$1",
+      '^environments/(.*)$': '<rootDir>/src/environments/$1',
     }
   };
