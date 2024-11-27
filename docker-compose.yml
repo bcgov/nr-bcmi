@@ -23,7 +23,7 @@ services:
 
   cms:
     container_name: cms
-    entrypoint: sh -c "npm i && npm run start"
+    entrypoint: sh -c "npm i && npm run develop"
     environment:
       DATABASE_CLIENT: postgres
       DATABASE_HOST: database
@@ -37,6 +37,7 @@ services:
       ADMIN_JWT_SECRET: default
       TRANSFER_TOKEN_SALT: default
       JWT_SECRET: default
+      HOSTNAME: "http://localhost:1337"
       KEYCLOAK_REALM: standard
       KEYCLOAK_URL: https://dev.loginproxy.gov.bc.ca/auth
       KEYCLOAK_CLIENT_ID: bcmi-cms-5784
@@ -85,3 +86,4 @@ services:
     depends_on:
       cms:
         condition: service_healthy
+        

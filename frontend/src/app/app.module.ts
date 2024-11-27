@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routes';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -28,10 +28,15 @@ import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
-import { GraphQLModule } from './graphql.module';
 import { PageComponent } from './page/page.component';
 import { ContentService } from './services/content-service';
 import { ContentDirective } from './services/content-directive';
+import { provideApollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/cache';
+
+import { environment } from 'environments/environment';
+const uri = environment.graphURI;
 
 export function initConfig(configService: ConfigService) {
   return () => configService.init();
@@ -52,7 +57,6 @@ export function initConfig(configService: ConfigService) {
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
-    HttpClientModule,
     ProjectsModule, // <-- module import order matters - https://angular.io/guide/router#module-import-order-matters
     EnforcementActionsModule,
     AppRoutingModule,
@@ -67,8 +71,7 @@ export function initConfig(configService: ConfigService) {
     MapModule,
     SharedModule,
     RouterModule,
-    LeafletModule,
-    GraphQLModule
+    LeafletModule
   ],
   providers: [
     {
@@ -82,7 +85,16 @@ export function initConfig(configService: ConfigService) {
     CookieService,
     ConfigService,
     GeocoderService,
-    LoggerService
+    LoggerService,
+    provideHttpClient(),
+    provideApollo(() => {
+      const httpLink = inject(HttpLink);
+ 
+      return {
+        link: httpLink.create({ uri: uri }),
+        cache: new InMemoryCache(),
+      };
+    }),
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-# BCMI (mem-mmti-public)
+# BCMI
 
 https://mines.nrs.gov.bc.ca/
 
@@ -17,6 +17,7 @@ The application is being developed as an open source solution.
    - [Unit tests](#unit-tests)
    - [End-to-end functional tests](#end-to-end-functional-tests)
    - [BrowserStack Config](#browserstack-config)
+1. [Deployment](#deployment)
 1. [Architecture](#architecture)
 1. [How to Contribute](#how-to-contribute)
    - [Contributing](#contributing)
@@ -42,6 +43,7 @@ Git commit signing is required for commits. [How to setup git commit signing](ht
 - [Clone the nr-bcmi repository](https://help.github.com/en/articles/cloning-a-repository)
 
 **To run/develop using docker:**
+1. Set the KEYCLOAK_CLIENT_SECRET env in docker-compose
 1. Run ```docker compose up ```
 
 **To run the frontend locally:**
@@ -49,7 +51,6 @@ Git commit signing is required for commits. [How to setup git commit signing](ht
   1. ``` cd bcmi ```
   1. ``` npm install ```
   1. ``` npm run start ```
-
 
   **To run Strapi locally:**
   1. create an .env file in the cms folder using the .env.template, find secrets in openshift
@@ -104,11 +105,15 @@ See the [BDDStack Wiki](https://github.com/BCDevOps/BDDStack/wiki) for more info
 
 ## Architecture
 
-BCMI is built using TypeScript and Angular for the front end, with Jest for testing. It employs PostgreSQL for database management and Node.js for the server, alongside Bootstrap and jQuery for design and interactivity. GraphQL facilitates data querying, while Strapi acts as the headless CMS.
-
-Our production and staging environments run on an OpenShift container platform cluster. OpenShift templates for services are located in the `openshift/` folder, along with more information about dev and staging environments on our cluster.
+BCMI is built using TypeScript and Angular for the front end, with Jest for testing. It employs PostgreSQL for database management and Node.js for the server, alongside Bootstrap and jQuery for design and interactivity. Apollo & GraphQL facilitates data querying, while Strapi acts as the headless CMS.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Deployment
+
+BCMI uses the [quickstart openshift template](https://github.com/bcgov/quickstart-openshift) and is deployed using github actions and helm charts found in the `.github/workflows` and `charts` folders.
+
+When a PR is opened unique pr deployment is deployed to the dev environment. Once the dev is satisfied with the PR and it is merged the changes are automatically deployed to the test environment for user testing. Once ready the changes can be deployed to production by manually triggering the `Deploy to production` workflow.
 
 ## How to Contribute
 
@@ -133,7 +138,7 @@ Code released under the [Apache License, Version 2.0](https://github.com/bcgov/g
 More documentation for the repository can be found in the following places
 
 - [Frontend](/bcmi/README.md)
-- [Strappi](/cms/README.md)
+- [Strapi](/cms/README.md)
 - [OpenShift](/openshift/README.md)
 - [Tests](/functional-tests/readme.md)
 

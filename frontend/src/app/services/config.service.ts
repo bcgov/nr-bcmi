@@ -84,4 +84,8 @@ export class ConfigService {
   public editConfigData(configData, configId, application, pathAPI: string) {
     return this.httpClient.put(`${pathAPI}/config/${application}/${configId}`, configData, {});
   }
+
+  public checkFeatureFlag(flag: string, expected: string): boolean{
+    return this.configuration["FEATURE_FLAG"] && this.configuration["FEATURE_FLAG"][flag] === expected;
+  }
 }

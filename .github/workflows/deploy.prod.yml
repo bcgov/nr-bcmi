@@ -1,19 +1,12 @@
-name: Merge
+name: Deploy to production
 
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - '*.md'
-      - '.github/**'
-      - '.github/graphics/**'
-      - '!.github/workflows/**'
   workflow_dispatch:
     inputs:
       pr_no:
         description: "PR-numbered container set to deploy"
         type: number
-        required: true
+        required: false
 
 concurrency:
   # Do not interrupt previous workflows
@@ -32,17 +25,25 @@ jobs:
       - name: PR Number
         id: pr
         uses: bcgov-nr/action-get-pr@v0.0.1
-
-  deploy-test:
-    name: Deploy (test)
+  
+  deploy-prod:
+    name: Deploy (prod)
+    needs: [vars]
     uses: ./.github/workflows/.deployer.yml
     secrets: inherit
     with:
-      environment: test
-
+      environment: prod
+      params:
+        --set cms.deploymentStrategy=RollingUpdate
+        --set frontend.deploymentStrategy=RollingUpdate
+        --set global.autoscaling=true
+        --set frontend.pdb.enabled=true
+        --set cms.pdb.enabled=true
+        --set cms.replicaCount=2
+        --set frontend.replicaCount=2
   promote:
     name: Promote Images
-    needs: [deploy-test, vars]
+    needs: [deploy-prod, vars]
     runs-on: ubuntu-24.04
     permissions:
       packages: write
@@ -56,4 +57,4 @@ jobs:
           registry: ghcr.io
           repository: ${{ github.repository }}/${{ matrix.package }}
           target: ${{ needs.vars.outputs.pr }}
-          tags: test
+          tags: prod

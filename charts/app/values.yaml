@@ -41,6 +41,7 @@ global:
 cms:
   #-- enable or disable cms
   enabled: true
+  replicaCount: 1
   #-- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
   #-- autoscaling for the component. it is optional and is an object.
@@ -48,9 +49,9 @@ cms:
     #-- enable or disable autoscaling.
     enabled: false
     #-- the minimum number of replicas.
-    minReplicas: 1
+    minReplicas: 2
     #-- the maximum number of replicas.
-    maxReplicas: 1
+    maxReplicas: 2
     #-- the target cpu utilization percentage, is from request cpu and NOT LIMIT CPU.
     targetCPUUtilizationPercentage: 80
   #-- vault, for injecting secrets from vault. it is optional and is an object. it creates an initContainer which reads from vault and app container can source those secrets. for referring to a working example with vault follow this link: https://github.com/bcgov/onroutebc/blob/main/charts/onroutebc/values.yaml#L171-L186
@@ -93,13 +94,13 @@ frontend:
   enabled: true
   # -- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
-
+  replicaCount: 1
   #-- autoscaling for the component. it is optional and is an object.
   autoscaling:
     #-- enable or disable autoscaling.
     enabled: false
     #-- the minimum number of replicas.
-    minReplicas: 1
+    minReplicas: 2
     #-- the maximum number of replicas.
     maxReplicas: 2
     #-- the target cpu utilization percentage, is from request cpu and NOT LIMIT CPU.
