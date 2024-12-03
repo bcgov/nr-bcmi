@@ -52,7 +52,7 @@
         <div class="accordion mt-0">
           <div class="accordion__collapse-item" *ngFor="let c of collections.items | orderBy: {property: sortField, direction: sortDirection}">
             <div class="accordion__collapse-header" role="tab" id="heading-{{c._id}}">
-              <a class="accordion__collapse-header--column toggle collapsed" data-toggle="collapse" href="#collapse-{{c._id}}" aria-expanded="true" aria-controls="collapseOne">
+              <a class="accordion__collapse-header--column toggle collapsed" data-bs-toggle="collapse" href="#collapse-{{c._id}}" aria-expanded="true" aria-controls="collapseOne">
                 <i class="material-icons open-icon">add</i>
                 <i class="material-icons close-icon">remove</i>
               </a>
