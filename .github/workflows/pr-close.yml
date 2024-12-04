@@ -19,3 +19,4 @@ jobs:
     with:
       cleanup: helm
       packages: cms frontend
+      remove_pvc: data-${{ github.event.repository.name }}-${{ github.event.number }}-bitnamijpg-0
