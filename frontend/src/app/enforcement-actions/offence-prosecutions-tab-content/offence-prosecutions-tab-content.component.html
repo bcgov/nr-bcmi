@@ -25,14 +25,14 @@
           <div class="accordion__collapse-header" id="accordHead" role="tab">
             <a
               class="accordion__collapse-header--column toggle collapsed"
-              data-toggle="collapse"
+              data-bs-toggle="collapse"
               href="#accordCollapse{{ item._id }}"
             >
               <i class="material-icons open-icon">add</i>
               <i class="material-icons close-icon">remove</i>
             </a>
             <span class="accordion__collapse-header--column enforcements-table__name-col">
-              <a data-toggle="collapse" href="#accordCollapse{{ item._id }}">
+              <a data-bs-toggle="collapse" href="#accordCollapse{{ item._id }}">
                 {{ item.issuedTo ? item.issuedTo : 'N/A' }}
               </a>
             </span>

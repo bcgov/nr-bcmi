@@ -3,8 +3,10 @@
 
 // Hide the footer when a component (e.g., the map) is shown full screen
 .full-screen {
-    footer.app-footer {
-        display: none;
+    + app-footer {
+        .app-footer {
+            display: none;
+        }
     }
 }
 
