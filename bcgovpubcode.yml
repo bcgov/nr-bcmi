@@ -1,0 +1,35 @@
+version: 1
+data_management_roles:
+  data_custodian: Colin Squirrell
+  product_owner: Rebecca Stevenson
+product_external_dependencies:
+  notification_standard: []
+product_information:
+  api_specifications: []
+  ministry:
+    - Energy, Mines and Low Carbon Innovation
+  product_acronym: BCMI
+  product_description: Public facing interface for information on major mines in British Columbia
+  product_name: British Columbia Mine Information
+  product_status: maturing
+  product_urls:
+    - https://mines.nrs.gov.bc.ca
+  program_area: Mines Digital Services
+product_technology_information:
+  backend_frameworks: []
+  backend_languages_version: []
+  ci_cd_tools:
+    - GitHub-Actions
+    - Helm
+  data_storage_platforms:
+    - Postgresql
+  frontend_frameworks:
+    - name: Angular
+      version: 18.2.3
+  frontend_languages:
+    - name: TypeScript
+      version: 5.5.4
+  hosting_platforms:
+    - Private-Cloud-Openshift
+  spatial_mapping_technologies:
+    - Leaflet
