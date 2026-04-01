@@ -11,10 +11,10 @@
 				<section>
 					<h4>Navigate</h4>
 					<div *ngFor="let nav of navigation">
-						<h5>{{nav.attributes.Heading}}</h5>
+						<h5>{{nav.Heading}}</h5>
 						<ul>
-							<li *ngFor="let link of nav.attributes.pages.data">
-							<a [routerLink]="link.attributes.route">{{link.attributes.Title}}</a>
+						<li *ngFor="let link of nav.pages">
+						<a [routerLink]="link.route">{{link.Title}}</a>
 							</li>
 						</ul>
 					</div>

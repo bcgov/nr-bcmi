@@ -20,12 +20,12 @@
 						tabindex="0"
 						(keydown)="preventDefault($event)"
 						(click)="preventDefault($event)">
-						<span>{{nav.attributes.Short_heading}}</span>
+						<span>{{nav.Short_heading}}</span>
 					</a>
 					<div class="dropdown-menu dm-sm dropdown-menu-right">
-						<a *ngFor="let link of nav.attributes.pages.data" class="dropdown-item" [routerLink]="link.attributes.route">
-							<strong>{{link.attributes.Title}}</strong>
-							<span class="dd-item-desc">{{link.attributes.tooltip}}</span>
+					<a *ngFor="let link of nav.pages" class="dropdown-item" [routerLink]="link.route">
+						<strong>{{link.Title}}</strong>
+						<span class="dd-item-desc">{{link.tooltip}}</span>
 						</a>
 					</div>
 				</li>
