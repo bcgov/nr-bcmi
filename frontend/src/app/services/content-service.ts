@@ -13,17 +13,13 @@ export class ContentService {
           query: gql`
           {
             pages{
-              data{
-                  attributes{
-                    Title,
-                    route
-                    tooltip
-                  }
-              }
+              Title,
+              route
+              tooltip
             }
           }
           `
-      }).pipe(map(response => response.data.pages?.data),
+      }).pipe(map(response => response.data.pages),
       catchError( (err: ApolloError) => {
         console.error(err.cause); 
         return of([]);
@@ -35,30 +31,18 @@ export class ContentService {
             query: gql`
             {
               footer {
-                data {
-                  attributes {
-                    About_title,
-                    About_description,
-                    Connect_description,
-                    Connect_title,
-                  }
-                }
+                About_title,
+                About_description,
+                Connect_description,
+                Connect_title,
               }
               navigations(sort: "Heading") {
-                data {
-                  attributes {
-                    Heading,
-                    Short_heading,
-                    pages(sort: "Title") {
-                      data {
-                        attributes {
-                          tooltip,
-                          route,
-                          Title,
-                        }
-                      }
-                    }
-                  }
+                Heading,
+                Short_heading,
+                pages(sort: "Title") {
+                  tooltip,
+                  route,
+                  Title,
                 }
               }
             }

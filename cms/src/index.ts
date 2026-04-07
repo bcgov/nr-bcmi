@@ -10,21 +10,17 @@ export default {
     extensionService.use(({ strapi }) => ({
       typeDefs: `
         type Query {
-          pageByRoute(route: String!): PageEntityResponse
+          pageByRoute(route: String!): Page
         }
       `,
       resolvers: {
         Query: {
           pageByRoute: {
             resolve: async (parent, args, context) => {
-              const { toEntityResponse } = strapi.service(
-                "plugin::graphql.format"
-              ).returnTypes;
-              const data = await strapi.services["api::page.page"].find({
+              const data = await strapi.documents("api::page.page").findMany({
                 filters: {route: args.route},
               });
-              const response = toEntityResponse(data.results[0]);
-              return response;
+              return data[0] || null;
             }
           }
         }

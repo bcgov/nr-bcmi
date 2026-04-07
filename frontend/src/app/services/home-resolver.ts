@@ -19,43 +19,27 @@ export class HomeResolver implements Resolve<HomeResponse> {
       return gql`
       {
         home {
-          data {
-            attributes {
-              Title,
-              Description,
-              About,
-              Mining_blocks {
-                Title,
-                Description,
-                page {
-                  data {
-                    attributes {
-                      route
-                    }
-                  }
-                }
-              }
-              Processes_blocks {
-                Title,
-                Description,
-                page {
-                  data {
-                    attributes {
-                      route
-                    }
-                  }
-                }
-              }
+          Title,
+          Description,
+          About,
+          Mining_blocks {
+            Title,
+            Description,
+            page {
+              route
+            }
+          }
+          Processes_blocks {
+            Title,
+            Description,
+            page {
+              route
             }
           }
         }
         fastFacts{
-          data{
-            attributes{
-              description,
-              value
-            }
-          }
+          description,
+          value
         }
       }`;
     }
@@ -67,8 +51,8 @@ export class HomeResolver implements Resolve<HomeResponse> {
         })
         .valueChanges.pipe(map(result => { 
           return {
-            home: result.data?.home.data.attributes as Home,
-            facts: result.data?.fastFacts.data.map(fact => fact.attributes) as FastFact[]
+            home: result.data?.home as Home,
+            facts: result.data?.fastFacts as FastFact[]
           }
         }),
         catchError(error => {

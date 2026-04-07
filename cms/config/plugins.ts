@@ -9,16 +9,17 @@ export default ({ env }) => ({
     'strapi-plugin-sso': {
         enabled: true,
         config: {
-            // Keycloak
-            KEYCLOAK_DOMAIN: env('KEYCLOAK_URL'),
-            KEYCLOAK_REALM:  env('KEYCLOAK_REALM'),
-            KEYCLOAK_CLIENT_ID: env('KEYCLOAK_CLIENT_ID'),
-            KEYCLOAK_CLIENT_SECRET: env('KEYCLOAK_CLIENT_SECRET'),
-            KEYCLOAK_REDIRECT_URI: env('HOSTNAME')+'/strapi-plugin-sso/keycloak/callback',
-            KEYCLOAK_STRAPI_SUPER_ADMIN_ROLE: 'strapi.super_admin',
-            KEYCLOAK_STRAPI_EDITOR_ROLE: 'strapi.editor',
-            KEYCLOAK_STRAPI_AUTHOR_ROLE: 'strapi.author',
-            KEYCLOAK_REQUIRE_EMAIL_VERIFICATION: false,
+            OIDC_SCOPES: 'openid email profile',
+            OIDC_AUTHORIZATION_ENDPOINT: `${env('KEYCLOAK_URL')}/realms/${env('KEYCLOAK_REALM')}/protocol/openid-connect/auth`,
+            OIDC_TOKEN_ENDPOINT: `${env('KEYCLOAK_URL')}/realms/${env('KEYCLOAK_REALM')}/protocol/openid-connect/token`,
+            OIDC_USER_INFO_ENDPOINT: `${env('KEYCLOAK_URL')}/realms/${env('KEYCLOAK_REALM')}/protocol/openid-connect/userinfo`,
+            OIDC_USER_INFO_ENDPOINT_WITH_AUTH_HEADER: true,
+            OIDC_GRANT_TYPE: 'authorization_code',
+            OIDC_FAMILY_NAME_FIELD: 'family_name',
+            OIDC_GIVEN_NAME_FIELD: 'given_name',
+            OIDC_CLIENT_SECRET: env('KEYCLOAK_CLIENT_SECRET'),
+            OIDC_CLIENT_ID: env('KEYCLOAK_CLIENT_ID'),
+            OIDC_REDIRECT_URI: env('HOSTNAME')+'/strapi-plugin-sso/oidc/callback',
         },
     },
 });

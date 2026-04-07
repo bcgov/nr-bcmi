@@ -17,23 +17,19 @@ export class ContentResolver implements Resolve<Page> {
         return gql`
         {
             pageByRoute(route: "${route}") {
-                data{
-                    attributes{
-                        Title,
-                        Description
-                        Header_button{
-                        Text
-                        Section_id
-                        }
-                        Content
-                        Ongoing_card
-                        External_card
-                        Related_card
-                        Enforcement_Actions_card
-                        route
-                        tooltip
-                    }
+                Title,
+                Description
+                Header_button{
+                Text
+                Section_id
                 }
+                Content
+                Ongoing_card
+                External_card
+                Related_card
+                Enforcement_Actions_card
+                route
+                tooltip
             }
         }
         `;
@@ -44,7 +40,7 @@ export class ContentResolver implements Resolve<Page> {
         return this.apollo.watchQuery<any>({
             query: this.getPage(route.routeConfig.path)
         })
-        .valueChanges.pipe(map(result => result.data?.pageByRoute.data.attributes as Page),
+        .valueChanges.pipe(map(result => result.data?.pageByRoute as Page),
         catchError(error => {
             console.error(error);
             return [];
