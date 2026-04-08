@@ -8,6 +8,6 @@ export default [
   'strapi::body',
   'strapi::session',
   'strapi::favicon',
-  'strapi::public',
   {resolve: './src/middlewares/admin-redirect'},
+  'strapi::public',
 ];

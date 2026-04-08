@@ -1,4 +1,4 @@
-import { throwError as observableThrowError, Observable, forkJoin } from 'rxjs';
+import { throwError as observableThrowError, Observable, forkJoin, of } from 'rxjs';
 import { switchMap, catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
@@ -55,6 +55,10 @@ export class ProjectService {
     return this.api.getProjectCollections(this.project._id).pipe(
       map((res: any) => this.processCollections(res && res[0] && res[0].searchResults ? res[0].searchResults : null)),
       switchMap((collections: any[]) => {
+        if (!collections.length) {
+          return of(collections);
+        }
+
         // Send all getCollectionDocuments API requests concurrently and combine the results as a single array
         return forkJoin(
           collections.map(collection => {
