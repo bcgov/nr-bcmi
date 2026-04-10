@@ -6,6 +6,9 @@ export default ({ env }) => ({
             maxLimit: 100
         }
     },
+    ckeditor5: {
+        enabled: true,
+    },
     'strapi-plugin-sso': {
         enabled: true,
         config: {
