@@ -1,4 +1,4 @@
-import { afterRender, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { afterEveryRender, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Page } from '../models/content/page';
 
@@ -21,7 +21,7 @@ export class PageComponent implements OnInit {
     this.fragment = null;
     this.routerLink = "/" + activatedRoute.snapshot.routeConfig.path;
 
-    afterRender(() => {
+    afterEveryRender(() => {
       // Only need to do this once after our content loaded
       if (this.handledFragmentFlag) { return; }
       const contentHasLoaded = document.getElementById('page-content').hasChildNodes();
