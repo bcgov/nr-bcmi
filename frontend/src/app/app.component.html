@@ -10,10 +10,7 @@
 
 <app-footer [footerData]="footer" [navigation]="navigation"></app-footer>
 
-<a href="#scrollTop" class="btn scroll-top-btn"
-  pageScroll
-  [pageScrollOffset]="0"
-  [pageScrollDuration]="800">
+<a class="btn scroll-top-btn" (click)="scrollToTop()">
   <i class="material-icons">arrow_upward</i>
 </a>
 

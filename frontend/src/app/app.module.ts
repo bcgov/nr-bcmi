@@ -5,8 +5,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routes';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
-import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -62,12 +60,6 @@ export function initConfig(configService: ConfigService) {
     AppRoutingModule,
     NgbModule,
     NgxPaginationModule,
-    NgxPageScrollModule,
-    NgxPageScrollCoreModule.forRoot({
-      scrollOffset: 50,
-      duration: 300,
-      easingLogic: Easing
-    }),
     MapModule,
     SharedModule,
     RouterModule,
@@ -100,17 +92,3 @@ export function initConfig(configService: ConfigService) {
   bootstrap: [AppComponent]
 })
 export class AppModule {}
-export function Easing(t: number, b: number, c: number, d: number): number {
-  // easeInOutExpo easing
-  if (t === 0) {
-    return b;
-  }
-  if (t === d) {
-    return b + c;
-  }
-  if ((t /= d / 2) < 1) {
-    return (c / 2) * Math.pow(2, 10 * (t - 1)) + b;
-  }
-
-  return (c / 2) * (-Math.pow(2, -10 * --t) + 2) + b;
-}
