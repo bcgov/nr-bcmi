@@ -16,9 +16,11 @@
       <!-- TAB HEADERS -->
       <div role="navigation">
         <ul class="nav nav-tabs nav-fill" role="tablist">
-          <li class="nav-item" role="presentation" *ngFor="let tabLink of tabLinks">
-            <a class="nav-link" role="tab" [routerLink]="tabLink.link" routerLinkActive #rla="routerLinkActive" [class.active]="rla.isActive">{{tabLink.label}}</a>
-          </li>
+          @for (tabLink of tabLinks; track tabLink) {
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" role="tab" [routerLink]="tabLink.link" routerLinkActive #rla="routerLinkActive" [class.active]="rla.isActive">{{tabLink.label}}</a>
+            </li>
+          }
         </ul>
       </div>
       <!-- TAB CONTENTS GO HERE -->

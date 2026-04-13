@@ -17,9 +17,11 @@
         <!-- TAB HEADERS -->
         <div role="navigation">
           <ul class="nav nav-tabs nav-fill" role="tablist">
-            <li class="nav-item" role="presentation" *ngFor="let tabLink of tabLinks">
-              <a class="nav-link" role="tab" [routerLink]="tabLink.link" routerLinkActive #rla="routerLinkActive" [class.active]="rla.isActive">{{tabLink.label}}</a>
-            </li>
+            @for (tabLink of tabLinks; track tabLink) {
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" role="tab" [routerLink]="tabLink.link" routerLinkActive #rla="routerLinkActive" [class.active]="rla.isActive">{{tabLink.label}}</a>
+              </li>
+            }
           </ul>
         </div>
         <!-- TAB CONTENTS GO HERE -->
@@ -57,14 +59,18 @@
           </li>
         </ul>
       </section>
-      <section class="card" *ngIf="project?.links?.length > 0">
-        <h4 class="card-header">External Links &amp; Resources</h4>
-        <ul class="nv-list">
-          <li *ngFor="let l of project?.links">
-            <a target="_blank" rel="noopener" href="{{l.url}}">{{l.title}}</a>
-          </li>
-        </ul>
-      </section>
+      @if (project?.links?.length > 0) {
+        <section class="card">
+          <h4 class="card-header">External Links &amp; Resources</h4>
+          <ul class="nv-list">
+            @for (l of project?.links; track l) {
+              <li>
+                <a target="_blank" rel="noopener" href="{{l.url}}">{{l.title}}</a>
+              </li>
+            }
+          </ul>
+        </section>
+      }
     </aside>
   </div>
 </div>

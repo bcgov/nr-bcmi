@@ -1,16 +1,18 @@
 <div class="hero-banner home-banner">
   <div class="container">
     <div class="container__inner-container">
-      <div class="hero-banner__content" *ngIf="homeData">
-        <h1 id="pgTitle">{{homeData.Title}}</h1>
-        <p>{{homeData.Description}}</p>
-        <div class="hero-banner__content--cta-btns">
-          <strong>Find Mines in British Columbia...</strong>
-          <a class="btn slide-l-btn hero-btn inverted" href="/mines" [routerLink]="['/mines']"><i class="material-icons">list</i><span>View List</span></a>
-          <span>or</span>
-          <a class="btn slide-l-btn hero-btn inverted" href="/map" [routerLink]="['/map']"><i class="material-icons">map</i><span>View Map</span></a>
+      @if (homeData) {
+        <div class="hero-banner__content">
+          <h1 id="pgTitle">{{homeData.Title}}</h1>
+          <p>{{homeData.Description}}</p>
+          <div class="hero-banner__content--cta-btns">
+            <strong>Find Mines in British Columbia...</strong>
+            <a class="btn slide-l-btn hero-btn inverted" href="/mines" [routerLink]="['/mines']"><i class="material-icons">list</i><span>View List</span></a>
+            <span>or</span>
+            <a class="btn slide-l-btn hero-btn inverted" href="/map" [routerLink]="['/map']"><i class="material-icons">map</i><span>View Map</span></a>
+          </div>
         </div>
-      </div>
+      }
     </div>
   </div>
 </div>
@@ -21,67 +23,77 @@
 
       <div class="row">
 
-        <div class="col-lg-8" *ngIf="homeData">
-          <section class="about-info mb-0" [innerHTML]="homeData.About"></section>
-        </div>
+        @if (homeData) {
+          <div class="col-lg-8">
+            <section class="about-info mb-0" [innerHTML]="homeData.About"></section>
+          </div>
+        }
 
-        <div class="col-lg-4" *ngIf="fastFacts && fastFacts.length > 0">
-          <section class="fast-facts">
-            <h4>Fast Facts about the Mining Industry in British Columbia</h4>
-            <ul class="row mb-0" *ngFor="let facts of fastFacts">
-              <li class="col-xs-12 col-sm-6 col-lg-12">
-                <div>
-                  <span class="metric">{{facts.value}}</span>
-                  <span class="metric-desc">{{facts.description}}</span>
-                </div>
-              </li>
-            </ul>
-          </section>
-        </div>
+        @if (fastFacts && fastFacts.length > 0) {
+          <div class="col-lg-4">
+            <section class="fast-facts">
+              <h4>Fast Facts about the Mining Industry in British Columbia</h4>
+              @for (facts of fastFacts; track facts) {
+                <ul class="row mb-0">
+                  <li class="col-xs-12 col-sm-6 col-lg-12">
+                    <div>
+                      <span class="metric">{{facts.value}}</span>
+                      <span class="metric-desc">{{facts.description}}</span>
+                    </div>
+                  </li>
+                </ul>
+              }
+            </section>
+          </div>
+        }
       </div>
     </div>
   </div>
 
-  <div class="fb-container bg-faded" *ngIf="homeData && homeData.Mining_blocks">
-    <section class="container">
-      <h2>Mining in British Columbia</h2>
-      <div class="row feature-blocks">
-        <ng-container *ngFor="let block of homeData.Mining_blocks">
+  @if (homeData && homeData.Mining_blocks) {
+    <div class="fb-container bg-faded">
+      <section class="container">
+        <h2>Mining in British Columbia</h2>
+        <div class="row feature-blocks">
+          @for (block of homeData.Mining_blocks; track block) {
+            <div class="col-md-4">
+              <div class="feature-block">
+                <h3>{{block.Title}}</h3>
+                <p>{{block.Description}}</p>
+                <a class="btn inverted" [routerLink]="block.page.route">Learn More</a>
+              </div>
+            </div>
+          }
           <div class="col-md-4">
             <div class="feature-block">
-              <h3>{{block.Title}}</h3>
-              <p>{{block.Description}}</p>
-              <a class="btn inverted" [routerLink]="block.page.route">Learn More</a>
+              <h3>Find Mines in B.C.</h3>
+              <p>The BC Mine Information website currently profiles {{numProjects}} major mines</p>
+              <a class="btn inverted" href="/mines" [routerLink]="['/mines']">View List</a>
+              <span>&nbsp;</span>
+              <a class="btn inverted" href="/map" [routerLink]="['/map']">View Map</a>
             </div>
-          </div>
-        </ng-container>
-        <div class="col-md-4">
-          <div class="feature-block">
-            <h3>Find Mines in B.C.</h3>
-            <p>The BC Mine Information website currently profiles {{numProjects}} major mines</p>
-            <a class="btn inverted" href="/mines" [routerLink]="['/mines']">View List</a>
-            <span>&nbsp;</span>
-            <a class="btn inverted" href="/map" [routerLink]="['/map']">View Map</a>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
+  }
 
-  <div class="fb-container" id="bottom" *ngIf="homeData && homeData.Processes_blocks">
-    <section class="container mt-0">
-      <h2>Our Processes &amp; Procedures</h2>
-      <div class="row">
-        <ng-container *ngFor="let block of homeData.Processes_blocks">
-          <div class="col-md-4">
-            <div class="feature-block">
-              <h3>{{block.Title}}</h3>
-              <p>{{block.Description}}</p>
-              <a class="btn inverted" [routerLink]="block.page.route">Learn More</a>
+  @if (homeData && homeData.Processes_blocks) {
+    <div class="fb-container" id="bottom">
+      <section class="container mt-0">
+        <h2>Our Processes &amp; Procedures</h2>
+        <div class="row">
+          @for (block of homeData.Processes_blocks; track block) {
+            <div class="col-md-4">
+              <div class="feature-block">
+                <h3>{{block.Title}}</h3>
+                <p>{{block.Description}}</p>
+                <a class="btn inverted" [routerLink]="block.page.route">Learn More</a>
+              </div>
             </div>
-          </div>
-        </ng-container>
-      </div>
-    </section>
-  </div>
+          }
+        </div>
+      </section>
+    </div>
+  }
 </main>
