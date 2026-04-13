@@ -1,6 +1,20 @@
 import MenuLogo from "../extensions/BC_Logo.png";
+import { setPluginConfig, getPluginPresets } from '@_sh/strapi-plugin-ckeditor';
 
 export default {
+  register() {
+    const defaultPresets = getPluginPresets();
+    setPluginConfig({
+      presets: [
+        ...Object.values(defaultPresets),
+        {
+          ...defaultPresets.defaultHtml,
+          name: 'toolbar',
+          description: 'Toolbar HTML editor',
+        },
+      ],
+    });
+  },
   config: {
     locales: [
       'en'
