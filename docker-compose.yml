@@ -60,7 +60,7 @@ services:
       CMS_URL: http://cms:1337
       PORT: 3000
       NODE_ENV: development
-    image: node:20.18
+    image: node:24.14.1
     ports: ["3000:3000"]
     volumes: ["./frontend:/app", "/app/node_modules"]
     healthcheck:
