@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, inject } from '@angular/core';
+import { NgModule, APP_INITIALIZER, inject, provideZoneChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -74,6 +74,7 @@ export function initConfig(configService: ConfigService) {
     LeafletModule
   ],
   providers: [
+    provideZoneChangeDetection(),
     {
       provide: APP_INITIALIZER,
       useFactory: initConfig,
