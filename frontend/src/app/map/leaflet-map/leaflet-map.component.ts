@@ -45,6 +45,7 @@ const markerGeocode = icon({
 Marker.prototype.options.icon = markerGeocode;
 
 @Component({
+  standalone: false,
   selector: 'app-leaflet-map',
   templateUrl: './leaflet-map.component.html',
   styleUrls: ['./leaflet-map.component.scss']

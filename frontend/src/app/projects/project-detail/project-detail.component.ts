@@ -6,6 +6,7 @@ import { Project } from '@models/project';
 import { LoggerService } from '@services/logger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']

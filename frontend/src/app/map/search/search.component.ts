@@ -15,6 +15,7 @@ export interface FiltersType {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-map-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']

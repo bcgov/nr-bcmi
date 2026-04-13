@@ -17,6 +17,7 @@ import {
 import { Footer } from './models/content/footer';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

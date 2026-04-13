@@ -5,6 +5,7 @@ import {Map as LeafletMap} from 'leaflet';
 
 
 @Component({
+  standalone: false,
   selector: 'app-project-popup',
   templateUrl: './project-popup.component.html',
   styleUrls: ['./project-popup.component.scss']

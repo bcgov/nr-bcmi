@@ -7,6 +7,7 @@ import { CollectionsGroup, Collection } from '@models/collection';
 import { LoggerService } from '@services/logger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-authorizations-tab-content',
   templateUrl: 'authorizations-tab-content.component.html',
   styleUrls: ['./authorizations-tab-content.component.scss']

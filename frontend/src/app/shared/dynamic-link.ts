@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-dynamic-link',
   template: `<a [routerLink]="routerLink" [fragment]="fragment" [innerHTML]="linkHTML" [ngClass]="linkClass"></a>`,
 })

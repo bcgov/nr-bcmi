@@ -7,6 +7,7 @@ declare module 'leaflet' {
   }
 }
 @Component({
+  standalone: false,
   selector: 'app-geocode-popup',
   templateUrl: './geocode-popup.component.html',
   styleUrls: ['./geocode-popup.component.scss']

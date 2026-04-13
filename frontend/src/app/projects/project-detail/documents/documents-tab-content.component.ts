@@ -7,6 +7,7 @@ import { CollectionsArray } from '@models/collection';
 import { LoggerService } from '@services/logger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-documents-tab-content',
   templateUrl: './documents-tab-content.component.html',
   styleUrls: ['./documents-tab-content.component.scss']
