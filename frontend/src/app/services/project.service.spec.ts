@@ -1,24 +1,47 @@
-import {TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 import { ProjectService } from '@services/project.service';
-import { HttpClientModule } from '@angular/common/http';
-
 import { Api } from '@services/api';
 
 describe('ProjectService', () => {
+  let apiMock: {
+    getProjectById: jest.Mock;
+    getProjectCollections: jest.Mock;
+    getCollectionDocuments: jest.Mock;
+    handleError: jest.Mock;
+  };
+  let service: ProjectService;
 
   beforeEach(() => {
+    apiMock = {
+      getProjectById: jest.fn(),
+      getProjectCollections: jest.fn(),
+      getCollectionDocuments: jest.fn(),
+      handleError: jest.fn()
+    };
+
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
       providers: [
-        Api,
-        ProjectService
+        ProjectService,
+        { provide: Api, useValue: apiMock }
       ]
     });
+
+    service = TestBed.inject(ProjectService);
   });
 
-  it('Project Service needs tests written', () => {
-    expect(true).toBeTruthy();
+  it('returns the project when CollectionBCMI is empty', done => {
+    apiMock.getProjectById.mockReturnValue(of([{ _id: 'mine-1', name: 'Mine 1' }]));
+    apiMock.getProjectCollections.mockReturnValue(of([{ searchResults: [] }]));
+
+    service.getById('mine-1').subscribe(project => {
+      expect(project).toBeTruthy();
+      expect(project._id).toBe('mine-1');
+      expect(project.collections).toBeTruthy();
+      expect(apiMock.getCollectionDocuments).not.toHaveBeenCalled();
+      done();
+    });
   });
 });
 
