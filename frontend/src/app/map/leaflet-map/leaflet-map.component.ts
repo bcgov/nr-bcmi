@@ -261,20 +261,17 @@ export class LeafletMapComponent implements OnInit, OnChanges {
           compRef.onDestroy(() => this.appRef.detachView(compRef.hostView));
           const div = document.createElement('div').appendChild(compRef.location.nativeElement);
 
-          let popupOptions = {};
-          if (this.map.getSize().y < 800) {
-            popupOptions = {
+          const popupOptions = this.map.getSize().y < 800
+            ? {
               className: 'map-popup-content',
               autoPanPaddingTopLeft: point(2, 100),
               autoPanPaddingBottomRight: point(2, 30)
-            };
-          } else {
-            popupOptions = {
+            }
+            : {
               className: 'map-popup-content',
               autoPanPaddingTopLeft: point(80, 200),
               autoPanPaddingBottomRight: point(80, 30)
             };
-          }
 
           const p = popup(popupOptions)
             .setLatLng(e.latlng)

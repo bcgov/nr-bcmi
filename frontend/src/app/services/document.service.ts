@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-assignment */
 import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';

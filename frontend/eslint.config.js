@@ -5,6 +5,17 @@ const angular = require("angular-eslint");
 
 module.exports = tseslint.config(
   {
+    ignores: [
+      ".husky/**",
+      ".vscode/**",
+      ".yarn/**",
+      "coverage/**",
+      "dist/**",
+      "public/assets/**",
+      "tsconfig.*.json",
+    ],
+  },
+  {
     files: ["**/*.ts"],
     ignores: ["src/test.ts"],
     extends: [
@@ -31,7 +42,9 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "@angular-eslint/prefer-inject": "off",
+      "@angular-eslint/prefer-standalone": "off",
     },
   },
   {
@@ -40,6 +53,8 @@ module.exports = tseslint.config(
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
     ],
-    rules: {},
+    rules: {
+      "@angular-eslint/template/prefer-control-flow": "off",
+    },
   }
 );

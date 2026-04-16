@@ -10,9 +10,9 @@
 
 <app-footer [footerData]="footer" [navigation]="navigation"></app-footer>
 
-<a class="btn scroll-top-btn" (click)="scrollToTop()">
+<button type="button" class="btn scroll-top-btn" (click)="scrollToTop()" aria-label="Scroll to top">
   <i class="material-icons">arrow_upward</i>
-</a>
+</button>
 
 <!-- Information Modal -->
 <ng-template #informationModal>
