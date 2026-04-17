@@ -69,11 +69,11 @@ describe('SearchComponent', () => {
     expect(component.updateMatching.emit).toHaveBeenCalled();
   });
 
-  it('should return single result when search by permit number ', async () => {
+  it('should return single result when search by permit number ', () => {
+    fixture.detectChanges();
     jest.spyOn(component.updateMatching, 'emit');
     component.radioSel = 'Permit Number';
     component._permitFilter = 'C-456';
-    await fixture.whenStable();
     component.applyFilters();
     expect(component.resultsCount).toEqual(1);
     expect(component.updateMatching.emit).toHaveBeenCalled();

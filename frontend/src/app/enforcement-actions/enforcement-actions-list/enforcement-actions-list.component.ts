@@ -5,6 +5,7 @@ import { ConfigService } from '@services/config.service';
 import { LoggerService } from '@services/logger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-enforcement-actions-list',
   templateUrl: './enforcement-actions-list.component.html',
   styleUrls: ['./enforcement-actions-list.component.scss']

@@ -7,6 +7,7 @@ import { LoggerService } from '@services/logger.service';
 import { DropdownLists, DropdownOption } from '../../shared/dropdown-lists';
 
 @Component({
+  standalone: false,
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],

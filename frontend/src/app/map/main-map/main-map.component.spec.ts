@@ -19,8 +19,9 @@ import { ContentService } from '@app/services/content-service';
 import { Apollo } from 'apollo-angular';
 
 @Component({
-  selector: 'app-leaflet-map',
-  template: ''
+    selector: 'app-leaflet-map',
+    template: '',
+    standalone: false
 })
 
 class LeafletMapStubComponent {

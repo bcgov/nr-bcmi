@@ -13,6 +13,8 @@ export class HomeResolver implements Resolve<HomeResponse> {
 
     constructor(private readonly apollo: Apollo){}
 
+  private readonly defaultResponse = new HomeResponse();
+
     private getHome = function(){
 
       // When adding new properties to the Page class, edit this query
@@ -44,21 +46,64 @@ export class HomeResolver implements Resolve<HomeResponse> {
       }`;
     }
 
+    private unwrapEntity<T>(value: any): T | null {
+      if (!value) {
+        return null;
+      }
+
+      if (value.data !== undefined) {
+        return this.unwrapEntity<T>(value.data);
+      }
+
+      if (value.attributes !== undefined) {
+        return this.unwrapEntity<T>(value.attributes);
+      }
+
+      return value as T;
+    }
+
+    private unwrapCollection<T>(value: any): T[] {
+      if (!value) {
+        return [];
+      }
+
+      if (Array.isArray(value)) {
+        return value
+          .map((item) => this.unwrapEntity<T>(item))
+          .filter((item): item is T => item !== null);
+      }
+
+      if (value.data !== undefined) {
+        return this.unwrapCollection<T>(value.data);
+      }
+
+      return [];
+    }
+
+    private buildResponse(data: any): HomeResponse {
+      const home = this.unwrapEntity<Home>(data?.home);
+      const facts = this.unwrapCollection<FastFact>(data?.fastFacts);
+
+      if (!home) {
+        return this.defaultResponse;
+      }
+
+      return {
+        home,
+        facts,
+      };
+    }
+
     resolve(): Observable<HomeResponse> {
     // Return an Observable that represents the GraphQL request to execute before the route is activated.
         return this.apollo.watchQuery<any>({
             query: this.getHome()
         })
-        .valueChanges.pipe(map(result => { 
-          return {
-            home: result.data?.home as Home,
-            facts: result.data?.fastFacts as FastFact[]
-          }
-        }),
+        .valueChanges.pipe(map(result => this.buildResponse(result.data)),
         catchError(error => {
           //Failed to fetch content for HomePage from CMS. Fallback to hard coded defaults.
           console.error(error);
-          return of(new HomeResponse());
+          return of(this.defaultResponse);
         }))
     }
 }

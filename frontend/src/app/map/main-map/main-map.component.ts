@@ -8,6 +8,7 @@ import * as L from 'leaflet';
 
 
 @Component({
+  standalone: false,
   selector: 'app-main-map',
   templateUrl: './main-map.component.html',
   styleUrls: ['./main-map.component.scss']

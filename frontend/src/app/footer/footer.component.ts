@@ -3,6 +3,7 @@ import { Footer } from '@app/models/content/footer';
 import { Api } from '@app/services/api';
 
 @Component({
+  standalone: false,
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],

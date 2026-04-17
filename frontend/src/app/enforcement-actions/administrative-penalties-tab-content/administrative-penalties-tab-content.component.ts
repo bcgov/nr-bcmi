@@ -6,6 +6,7 @@ import { AdministrativePentalty } from '@models/administrative-penalty';
 import { LoggerService } from '@services/logger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-administrative-penalties-tab-content',
   templateUrl: './administrative-penalties-tab-content.component.html',
   styleUrls: ['./administrative-penalties-tab-content.component.scss']

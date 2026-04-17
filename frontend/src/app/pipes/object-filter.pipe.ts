@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Project} from '@models/project';
 
 @Pipe({
+  standalone: false,
   name: 'objectFilter'
 })
 export class ObjectFilterPipe implements PipeTransform {

@@ -1,6 +1,5 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { CookieService } from 'ngx-cookie-service';
 import { Api } from '@services/api';
 import { ConfigService } from '@services/config.service';
@@ -30,7 +29,6 @@ describe('AppComponent', () => {
       ],
       imports: [
         RouterTestingModule,
-        NgxPageScrollModule,
         HttpClientModule
       ]
     }).compileComponents();

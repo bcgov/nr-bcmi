@@ -1,7 +1,7 @@
 import { catchError, map, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { ApolloError } from '@apollo/client/errors';
+
 
 @Injectable()
 export class ContentService {
@@ -20,7 +20,7 @@ export class ContentService {
           }
           `
       }).pipe(map(response => response.data.pages),
-      catchError( (err: ApolloError) => {
+      catchError( (err) => {
         console.error(err.cause); 
         return of([]);
       })).toPromise();
@@ -48,7 +48,7 @@ export class ContentService {
             }
             `
         }).pipe(map(response => response.data),
-        catchError( (err: ApolloError) => {
+        catchError( (err) => {
           console.error(err.cause); 
           return of([]);
         })).toPromise();

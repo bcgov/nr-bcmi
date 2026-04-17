@@ -1,6 +1,9 @@
 module.exports = {
     testTimeout: 9000, // Set global timeout to 30 seconds
     preset: 'jest-preset-angular',
+    testEnvironment: 'jest-environment-jsdom',
+    setupFiles: ['zone.js', '@angular/localize/init'],
+    setupFilesAfterEnv: ['zone.js/testing'],
     collectCoverage: true, 
     coverageDirectory: './coverage',
     coverageReporters: ['text', 'lcov', 'html'],

@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
@@ -17,6 +18,7 @@ import {
 import { Footer } from './models/content/footer';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -43,7 +45,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private api: Api,
     private modalService: NgbModal,
     private configService: ConfigService,
-    private router: Router) {
+    private router: Router,
+    private viewportScroller: ViewportScroller) {
     if(configService.globalContent){
       if(configService.globalContent.footer){
         this.footer = configService.globalContent.footer;
@@ -74,6 +77,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
     // Used for sharing links.
     this.hostname = this.api.hostnameNRPTI;
+  }
+
+  scrollToTop(): void {
+    this.viewportScroller.scrollToPosition([0, 0]);
   }
 
   ngOnInit() {

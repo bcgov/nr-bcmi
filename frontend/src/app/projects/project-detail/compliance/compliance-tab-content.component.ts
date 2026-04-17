@@ -8,6 +8,7 @@ import { LoggerService } from '@services/logger.service';
 import { ConfigService } from '@services/config.service';
 
 @Component({
+  standalone: false,
   selector: 'app-compliance-tab-content',
   templateUrl: './compliance-tab-content.component.html',
   styleUrls: ['./compliance-tab-content.component.scss']

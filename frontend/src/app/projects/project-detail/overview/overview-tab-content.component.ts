@@ -6,6 +6,7 @@ import { Project } from '@models/project';
 import { LoggerService } from '@services/logger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-overview-tab-content',
   templateUrl: './overview-tab-content.component.html',
   styleUrls: ['./overview-tab-content.component.scss']

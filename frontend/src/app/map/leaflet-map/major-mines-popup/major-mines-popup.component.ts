@@ -4,6 +4,7 @@ import { LatLng } from 'leaflet';
 
 
 @Component({
+  standalone: false,
   selector: 'app-major-mines-popup',
   templateUrl: './major-mines-popup.component.html',
   styleUrls: ['./major-mines-popup.component.scss']

@@ -6,6 +6,7 @@ import { CourtConviction } from '@models/court-conviction';
 import { LoggerService } from '@services/logger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-offence-prosecutions-tab-content',
   templateUrl: './offence-prosecutions-tab-content.component.html',
   styleUrls: ['./offence-prosecutions-tab-content.component.scss']

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-site-activities',
   templateUrl: './site-activities.component.html',
   styleUrls: ['./site-activities.component.scss']

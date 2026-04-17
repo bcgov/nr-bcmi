@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input, Renderer2, ViewContainerRef, AfterViewIni
 import { DynamicLinkComponent } from "@app/shared/dynamic-link";
 
 @Directive({
+  standalone: false,
     selector: "[appContent]",
 })
 

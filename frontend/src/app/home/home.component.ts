@@ -7,6 +7,7 @@ import { Home } from '@app/models/content/home';
 import { FastFact } from '@app/models/content/fast-fact';
 
 @Component({
+  standalone: false,
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
