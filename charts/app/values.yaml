@@ -70,9 +70,6 @@ cms:
       - prod/api-2
     #-- resources specific to vault initContainer. it is optional and is an object.
     resources:
-      limits:
-        cpu: 50m
-        memory: 50Mi
       requests:
         cpu: 50m
         memory: 25Mi
@@ -169,7 +166,3 @@ bitnamipg:
       requests:
         cpu: 50m
         memory: 150Mi
-      limits:
-        cpu: 200m
-        memory: 300Mi
-
