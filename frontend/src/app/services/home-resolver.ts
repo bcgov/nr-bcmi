@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, filter, map, of, take } from 'rxjs';
 import { Apollo, gql } from 'apollo-angular';
 import { Home } from '@app/models/content/home';
 import { FastFact} from '@app/models/content/fast-fact'
@@ -97,13 +97,17 @@ export class HomeResolver implements Resolve<HomeResponse> {
     resolve(): Observable<HomeResponse> {
     // Return an Observable that represents the GraphQL request to execute before the route is activated.
         return this.apollo.watchQuery<any>({
-            query: this.getHome()
+            query: this.getHome(),
         })
-        .valueChanges.pipe(map(result => this.buildResponse(result.data)),
-        catchError(error => {
-          //Failed to fetch content for HomePage from CMS. Fallback to hard coded defaults.
-          console.error(error);
-          return of(this.defaultResponse);
-        }))
+        .valueChanges.pipe(
+          filter((result) => !result.loading),
+          map((result) => this.buildResponse(result.data)),
+          take(1),
+          catchError((error) => {
+            // Failed to fetch content for HomePage from CMS. Fallback to hard coded defaults.
+            console.error('HomeResolver GraphQL request failed:', error);
+            return of(this.defaultResponse);
+          })
+        )
     }
 }
