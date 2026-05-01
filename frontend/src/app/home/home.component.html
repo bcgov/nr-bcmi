@@ -60,7 +60,9 @@
               <div class="feature-block">
                 <h3>{{block.Title}}</h3>
                 <p>{{block.Description}}</p>
-                <a class="btn inverted" [routerLink]="block.page.route">Learn More</a>
+                @if (block.page?.route) {
+                  <a class="btn inverted" [routerLink]="block.page.route">Learn More</a>
+                }
               </div>
             </div>
           }
@@ -88,7 +90,9 @@
               <div class="feature-block">
                 <h3>{{block.Title}}</h3>
                 <p>{{block.Description}}</p>
-                <a class="btn inverted" [routerLink]="block.page.route">Learn More</a>
+                @if (block.page?.route) {
+                  <a class="btn inverted" [routerLink]="block.page.route">Learn More</a>
+                }
               </div>
             </div>
           }
