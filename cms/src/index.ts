@@ -18,6 +18,7 @@ export default {
           pageByRoute: {
             resolve: async (parent, args, context) => {
               const data = await strapi.documents("api::page.page").findMany({
+                status: "published",
                 filters: {route: args.route},
               });
               return data[0] || null;
