@@ -1,0 +1,19 @@
+{{- if .Values.backup.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-s3-backup-config
+  labels: {{- include "labels" . | nindent 4 }}
+data:
+  BACKUP_DIR: {{ .Values.backup.backupDir | quote }}
+  BACKUP_STRATEGY: {{ .Values.backup.strategy | quote }}
+  ENVIRONMENT_FRIENDLY_NAME: {{ .Values.backup.environmentFriendlyName | quote }}
+  ENVIRONMENT_NAME: {{ .Release.Namespace | quote }}
+  RETENTION.DAILY_BACKUPS: {{ .Values.backup.retention.daily | quote }}
+  RETENTION.WEEKLY_BACKUPS: {{ .Values.backup.retention.weekly | quote }}
+  RETENTION.MONTHLY_BACKUPS: {{ .Values.backup.retention.monthly | quote }}
+  RETENTION.NUM_BACKUPS: {{ .Values.backup.retention.num | quote }}
+  TABLE_SCHEMA: {{ .Values.backup.tableSchema | quote }}
+  S3_PRUNE_BACKUPS: {{ .Values.backup.s3PruneBackups | quote }}
+  backup.conf: "postgres={{ .Release.Name }}-{{ .Values.global.databaseAlias }}:5432/{{ .Values.global.secrets.databaseName | default "cms" }}"
+{{- end }}

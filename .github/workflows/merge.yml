@@ -39,6 +39,7 @@ jobs:
     secrets: inherit
     with:
       environment: test
+      params: --set backup.enabled=true
 
   promote:
     name: Promote Images
