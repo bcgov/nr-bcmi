@@ -1,0 +1,25 @@
+{{- if .Values.backup.enabled }}
+---
+# Allow the backup CronJob pod to connect to the database on port 5432
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}-allow-backup-to-db
+  labels: {{- include "labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.global.databaseAlias }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 5432
+      from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ .Release.Name }}-s3-backup
+              app.kubernetes.io/instance: {{ .Release.Name }}
+  policyTypes:
+    - Ingress
+{{- end }}

@@ -166,3 +166,28 @@ bitnamipg:
       requests:
         cpu: 50m
         memory: 150Mi
+
+backup:
+  enabled: false
+  #-- cron schedule (UTC); default is 07:30 daily.
+  schedule: "30 7 * * *"
+  image: "image-registry.openshift-image-registry.svc:5000/f00029-tools/nr-bcmi-backup:15"
+  backupDir: /backups/
+  strategy: rolling
+  environmentFriendlyName: "NR-BCMI Postgres S3 Backup"
+  tableSchema: public
+  s3PruneBackups: "false"
+  retention:
+    daily: "7"
+    weekly: "4"
+    monthly: "1"
+    num: "5"
+  s3SecretName: nr-bcmi-s3-backup-secret
+  webhookSecretName: backup-webhook
+  resources:
+    limits:
+      cpu: "1"
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 500Mi

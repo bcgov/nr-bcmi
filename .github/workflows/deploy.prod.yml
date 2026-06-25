@@ -30,6 +30,7 @@ jobs:
         --set cms.pdb.enabled=true
         --set cms.replicaCount=2
         --set frontend.replicaCount=2
+        --set backup.enabled=true
   promote:
     name: Promote Images
     needs: [deploy-prod]

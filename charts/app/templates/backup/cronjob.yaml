@@ -1,0 +1,148 @@
+{{- if .Values.backup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-s3-backup
+  labels: {{- include "labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.backup.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: {{ .Release.Name }}-s3-backup
+            app.kubernetes.io/instance: {{ .Release.Name }}
+        spec:
+          activeDeadlineSeconds: 1600
+          restartPolicy: Never
+          serviceAccountName: default
+          containers:
+            - name: {{ .Release.Name }}-s3-backup
+              image: {{ .Values.backup.image | quote }}
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/bash
+                - -c
+                - /backup.sh -1
+              env:
+                - name: BACKUP_DIR
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: BACKUP_DIR
+                - name: BACKUP_STRATEGY
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: BACKUP_STRATEGY
+                - name: NUM_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: RETENTION.NUM_BACKUPS
+                      optional: true
+                - name: DAILY_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: RETENTION.DAILY_BACKUPS
+                      optional: true
+                - name: WEEKLY_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: RETENTION.WEEKLY_BACKUPS
+                      optional: true
+                - name: MONTHLY_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: RETENTION.MONTHLY_BACKUPS
+                      optional: true
+                - name: DATABASE_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Release.Name }}-cms
+                      key: DATABASE_USER
+                - name: DATABASE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Release.Name }}-cms
+                      key: DATABASE_PASSWORD
+                - name: TABLE_SCHEMA
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: TABLE_SCHEMA
+                      optional: true
+                - name: ENVIRONMENT_FRIENDLY_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: ENVIRONMENT_FRIENDLY_NAME
+                      optional: true
+                - name: ENVIRONMENT_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: ENVIRONMENT_NAME
+                      optional: true
+                - name: WEBHOOK_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.backup.webhookSecretName }}
+                      key: webhook-url
+                - name: S3_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.backup.s3SecretName }}
+                      key: S3_USER
+                - name: S3_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.backup.s3SecretName }}
+                      key: S3_PASSWORD
+                - name: S3_ENDPOINT
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.backup.s3SecretName }}
+                      key: S3_ENDPOINT
+                - name: S3_BUCKET
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.backup.s3SecretName }}
+                      key: S3_BUCKET
+                - name: S3_PRUNE_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ .Release.Name }}-s3-backup-config
+                      key: S3_PRUNE_BACKUPS
+                      optional: true
+              resources:
+                limits:
+                  cpu: {{ .Values.backup.resources.limits.cpu | quote }}
+                  memory: {{ .Values.backup.resources.limits.memory | quote }}
+                requests:
+                  cpu: {{ .Values.backup.resources.requests.cpu | quote }}
+                  memory: {{ .Values.backup.resources.requests.memory | quote }}
+              volumeMounts:
+                - name: backup
+                  mountPath: /backups/
+                - name: s3-backup-config-volume
+                  mountPath: /backup.conf
+                  subPath: backup.conf
+          volumes:
+            - name: backup
+              emptyDir: {}
+            - name: s3-backup-config-volume
+              configMap:
+                name: {{ .Release.Name }}-s3-backup-config
+                items:
+                  - key: backup.conf
+                    path: backup.conf
+{{- end }}
