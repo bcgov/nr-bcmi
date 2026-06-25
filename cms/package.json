@@ -12,15 +12,15 @@
   },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "7.1.1",
-    "strapi-plugin-sso": "1.0.8",
-    "@strapi/plugin-graphql": "5.43.0",
+    "strapi-plugin-sso": "1.0.9",
+    "@strapi/plugin-graphql": "5.48.1",
     "@strapi/plugin-users-permissions": "5.43.0",
-    "@strapi/strapi": "5.43.0",
-    "pg": "8.8.0",
-    "react": "18.3.0",
-    "react-dom": "18.3.0",
-    "react-router-dom": "6.30.3",
-    "styled-components": "6.3.12"
+    "@strapi/strapi": "5.48.1",
+    "pg": "8.21.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.30.4",
+    "styled-components": "6.4.2"
   },
   "author": {
     "name": "Sustainment team"
