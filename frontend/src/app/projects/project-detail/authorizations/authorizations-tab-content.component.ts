@@ -68,6 +68,17 @@ export class AuthorizationsTabContentComponent implements OnInit, OnDestroy {
     }
   }
 
+  // MineBCMI records carry the mine number in mineNo
+  get mineNumber(): string {
+    return this.project && this.project.mineNo || '';
+  }
+
+  get credentialDiscoveryUrl(): string {
+    return this.mineNumber
+      ? `https://untp-publisher-api.apps.gold.devops.gov.bc.ca/discovery?search=${encodeURIComponent(this.mineNumber)}`
+      : '';
+  }
+
   formatDisplayName(collection: Collection): string {
     let displayName = '';
 
