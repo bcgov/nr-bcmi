@@ -19,9 +19,20 @@
         <h3>{{agency.act}} <span>{{agency.name}}</span></h3>
 
         @if (agency.act === 'Mines Act' && credentialDiscoveryUrl) {
-          <p class="auth-section__credential-link">
-            <a [href]="credentialDiscoveryUrl" target="_blank" rel="noopener">View digital credentials for mine {{mineNumber}}</a>
-          </p>
+          <div class="credential-callout">
+            <i class="material-icons credential-callout__icon" aria-hidden="true">verified_user</i>
+            <div class="credential-callout__body">
+              <h4 class="credential-callout__title">Verified digital credentials</h4>
+              <p class="credential-callout__text">
+                Some Mines Act Permits are published as secure, tamper-proof digital credentials that third parties can verify.
+              </p>
+              <p class="credential-callout__link">
+                <a [href]="credentialDiscoveryUrl" target="_blank" rel="noopener">View digital credentials for {{project.name}}<i
+                  class="material-icons" aria-hidden="true">open_in_new</i></a>
+                <span class="credential-callout__new-tab">(opens in a new tab)</span>
+              </p>
+            </div>
+          </div>
         }
 
         <div class="accordion authorizations-list" id="{{agency.htmlId}}" role="tablist" aria-multiselectable="false">

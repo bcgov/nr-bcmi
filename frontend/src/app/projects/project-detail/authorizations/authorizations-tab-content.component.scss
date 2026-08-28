@@ -4,6 +4,63 @@
     margin-bottom: 2rem;
 }
 
+.credential-callout {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background-color: #eef4fb;
+    border-left: 4px solid #1a5a96;
+
+    &__icon {
+        flex: 0 0 auto;
+        color: #38598a;
+        font-size: 1.75rem;
+    }
+
+    &__title {
+        margin: 0 0 0.5rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1a5a96;
+    }
+
+    &__text {
+        margin: 0 0 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.4rem;
+    }
+
+    &__link {
+        margin: 0;
+        font-size: 0.875rem;
+
+        a {
+            font-weight: 700;
+            text-decoration: underline;
+
+            i {
+                margin-left: 0.25rem;
+                font-size: 1rem;
+                vertical-align: text-bottom;
+            }
+        }
+    }
+
+    &__new-tab {
+        margin-left: 0.5rem;
+        color: #494949;
+    }
+}
+
+@media (max-width: 760px) {
+    .credential-callout {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+}
+
 .authorizations-list {
     .accordion {
         &__collapse-header {
