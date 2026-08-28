@@ -26,6 +26,7 @@ export class Project {
   write:                string[];
   // attributes
   name:                 string;
+  mineNo:               string;
   permitNumber:         string;
   showPermitNumber:     boolean;
   status:               string;
@@ -77,6 +78,7 @@ export class Project {
     this.write                = (obj && obj.write)                || null;
     // attributes
     this.name                 = (obj && obj.name)                 || '';
+    this.mineNo               = (obj && obj.mineNo)               || '';
     this.permitNumber         = (obj && obj.permitNumber )        || '';
     this.showPermitNumber     = (obj && obj.showPermitNumber); // Cannot set default on boolean here.
     this.status               = (obj && obj.status)               || '';
