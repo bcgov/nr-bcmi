@@ -81,7 +81,6 @@ export class AuthorizationsTabContentComponent implements OnInit, OnDestroy {
   get credentialDiscoveryUrl(): string {
     const domainSuffix = { test: '-test', prod: '', dev: '-dev', local: '-dev' };
     const environment = this.configService.config['ENVIRONMENT'];
-    alert(environment);
 
     return this.mineNumber
       ? `https://untp-publisher-api${domainSuffix[environment]}.apps.gold.devops.gov.bc.ca/discovery?search=${encodeURIComponent(this.mineNumber)}`
