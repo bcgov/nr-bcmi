@@ -9,6 +9,7 @@ import { Project } from '@models/project';
 
 import { OrderByPipe } from '@pipes/filters/order-by.pipe';
 import { RemoveStringValuePipe } from '@pipes/remove-string-value.pipe';
+import { ConfigService } from '@services/config.service';
 
 import { MapModule } from '../../../map/map.module';
 import { CollectionsGroup, CollectionsList } from '@models/collection';
@@ -33,9 +34,18 @@ describe('AuthorizationsTabContentComponent', () => {
         }
       }
     };
+
+    const configServiceStub = {
+      config: {
+        ENVIRONMENT: 'dev'
+      }
+    };
+
+
     TestBed.configureTestingModule({
       providers: [
-        { provide: ActivatedRoute, useValue: ActivatedRouteStub }
+        { provide: ActivatedRoute, useValue: ActivatedRouteStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ],
       declarations: [
         AuthorizationsTabContentComponent,

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Project } from '@models/project';
 import { CollectionsGroup, Collection } from '@models/collection';
 import { LoggerService } from '@services/logger.service';
+import { ConfigService } from '@services/config.service';
 
 @Component({
   standalone: false,
@@ -42,7 +43,11 @@ export class AuthorizationsTabContentComponent implements OnInit, OnDestroy {
   // private fields
   private sub: Subscription;
 
-  constructor(private route: ActivatedRoute, private logger: LoggerService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private logger: LoggerService,
+    private configService: ConfigService
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -66,6 +71,20 @@ export class AuthorizationsTabContentComponent implements OnInit, OnDestroy {
     if (this.sub) {
       this.sub.unsubscribe();
     }
+  }
+
+  // MineBCMI records carry the mine number in mineNo
+  get mineNumber(): string {
+    return this.project && this.project.mineNo || '';
+  }
+
+  get credentialDiscoveryUrl(): string {
+    const domainSuffix = { test: '-test', prod: '', dev: '-dev', local: '-dev' };
+    const environment = this.configService.config['ENVIRONMENT'];
+
+    return this.mineNumber
+      ? `https://untp-publisher-api${domainSuffix[environment]}.apps.gold.devops.gov.bc.ca/discovery?search=${encodeURIComponent(this.mineNumber)}`
+      : '';
   }
 
   formatDisplayName(collection: Collection): string {
