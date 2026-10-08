@@ -7,7 +7,7 @@ COPY . ./
 RUN npm install && npm run build
 
 # Deploy using Caddy to host static files
-FROM caddy:2.11.2-alpine
+FROM caddy:2.11.4-alpine
 RUN apk add --no-cache ca-certificates
 
 # Copy static files, verify Caddyfile formatting
